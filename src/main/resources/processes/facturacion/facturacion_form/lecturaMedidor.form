@@ -1,0 +1,78 @@
+{
+  "components": [
+    {
+      "label": "Dirección de recidencia",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0qbnna7",
+        "columns": null
+      },
+      "id": "Field_12xxcm9",
+      "key": "direccion",
+      "disabled": true,
+      "description": "Cargado automáticamente desde el sistema."
+    },
+    {
+      "label": "Lectura del Medidor (m³)",
+      "type": "number",
+      "layout": {
+        "row": "Row_0teetes",
+        "columns": null
+      },
+      "id": "Field_1skzs1m",
+      "key": "lecturaActual",
+      "description": "Ingrese el valor de los dígitos negros y rojos (según aplique).",
+      "validate": {
+        "required": true,
+        "min": "0"
+      }
+    },
+    {
+      "label": "Estado del medidor",
+      "values": [
+        {
+          "label": "Sí (Visible y OK)",
+          "value": "ok"
+        },
+        {
+          "label": "No (Ilegible/Dañado)",
+          "value": "ilegible"
+        },
+        {
+          "label": "No (Acceso Bloqueado)",
+          "value": "inaccesible"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_0e0pn6v",
+        "columns": null
+      },
+      "id": "Field_0qd0jo1",
+      "key": "estadoMedidor",
+      "description": "¿Medidor Visible y en Buen Estado?",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Guardar y Sincronizar Lectura",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1d1yy23",
+        "columns": null
+      },
+      "id": "Field_05mg5aj"
+    }
+  ],
+  "type": "default",
+  "id": "lecturaMedidorGasForm",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}
