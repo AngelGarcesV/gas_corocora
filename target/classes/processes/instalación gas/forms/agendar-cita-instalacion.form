@@ -1,0 +1,72 @@
+{
+  "components": [
+    {
+      "label": "Agendar Cita de Instalación",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# Agendar Cita de Instalación\n\nIngrese la fecha para la instalación de tubería y medidor."
+    },
+    {
+      "label": "Fecha de Instalación",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_fecha_instalacion",
+      "key": "fecha_instalacion",
+      "validate": {
+        "required": true
+      },
+      "description": "Seleccione la fecha y hora para la instalación de tubería y medidor",
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset",
+      "timeInterval": 15
+    },
+    {
+      "label": "Técnico Asignado",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_tecnico_asignado",
+      "key": "tecnico_asignado",
+      "validate": {
+        "required": false,
+        "maxLength": 100
+      },
+      "description": "Nombre del técnico asignado para la instalación"
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_3",
+        "columns": null
+      },
+      "id": "Field_observaciones_instalacion",
+      "key": "observaciones_instalacion",
+      "validate": {
+        "required": false,
+        "maxLength": 500
+      },
+      "description": "Observaciones adicionales para la cita de instalación"
+    }
+  ],
+  "type": "default",
+  "id": "agendar-cita-instalacion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

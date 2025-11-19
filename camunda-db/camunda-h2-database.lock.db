@@ -1,0 +1,6 @@
+#FileLock
+#Tue Nov 18 20:14:43 COT 2025
+hostName=ANGEL-PC
+id=19a99ad9e51f915b2af123e25c5bc63a4dd6a9ced68
+method=file
+server=192.168.1.13\:63495

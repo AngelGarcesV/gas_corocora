@@ -1,0 +1,253 @@
+{
+  "components": [
+    {
+      "label": "Verificación de Instalación",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# Verificación de Instalación\n\nDocumente la verificación final de la instalación de tubería y medidor."
+    },
+    {
+      "label": "Fecha de Verificación",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1",
+        "columns": 8
+      },
+      "id": "Field_fecha_verificacion",
+      "key": "fecha_verificacion",
+      "validate": {
+        "required": true
+      },
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset",
+      "description": "Fecha y hora de la verificación"
+    },
+    {
+      "label": "Técnico Verificador",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1",
+        "columns": 8
+      },
+      "id": "Field_tecnico_verificador",
+      "key": "tecnico_verificador",
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "description": "Nombre del técnico que realiza la verificación"
+    },
+    {
+      "label": "¿Instalación correcta?",
+      "type": "radio",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_instalacion_correcta",
+      "key": "instalacion_correcta",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Sí, instalación aprobada",
+          "value": "true"
+        },
+        {
+          "label": "No, requiere correcciones",
+          "value": "false"
+        }
+      ],
+      "description": "Indique si la instalación cumple con todos los estándares"
+    },
+    {
+      "label": "Número de Medidor",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_3",
+        "columns": 8
+      },
+      "id": "Field_numero_medidor",
+      "key": "numero_medidor",
+      "validate": {
+        "required": true,
+        "minLength": 5,
+        "maxLength": 50
+      },
+      "description": "Número de serie del medidor instalado"
+    },
+    {
+      "label": "Longitud de Tubería (metros)",
+      "type": "number",
+      "layout": {
+        "row": "Row_3",
+        "columns": 8
+      },
+      "id": "Field_longitud_tuberia",
+      "key": "longitud_tuberia",
+      "decimalDigits": 2,
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "description": "Metros de tubería instalados"
+    },
+    {
+      "label": "Diámetro de Tubería",
+      "type": "select",
+      "layout": {
+        "row": "Row_4",
+        "columns": null
+      },
+      "id": "Field_diametro_tuberia",
+      "key": "diametro_tuberia",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "1/2 pulgada",
+          "value": "1_2"
+        },
+        {
+          "label": "3/4 pulgada",
+          "value": "3_4"
+        },
+        {
+          "label": "1 pulgada",
+          "value": "1"
+        },
+        {
+          "label": "1 1/4 pulgada",
+          "value": "1_1_4"
+        },
+        {
+          "label": "1 1/2 pulgada",
+          "value": "1_1_2"
+        }
+      ],
+      "description": "Diámetro de la tubería instalada"
+    },
+    {
+      "label": "Prueba de Hermeticidad",
+      "type": "select",
+      "layout": {
+        "row": "Row_5",
+        "columns": null
+      },
+      "id": "Field_prueba_hermeticidad",
+      "key": "prueba_hermeticidad",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Aprobada",
+          "value": "aprobada"
+        },
+        {
+          "label": "Rechazada",
+          "value": "rechazada"
+        },
+        {
+          "label": "No realizada",
+          "value": "no_realizada"
+        }
+      ],
+      "description": "Resultado de la prueba de hermeticidad"
+    },
+    {
+      "label": "Presión de Prueba (PSI)",
+      "type": "number",
+      "layout": {
+        "row": "Row_6",
+        "columns": 8
+      },
+      "id": "Field_presion_prueba",
+      "key": "presion_prueba",
+      "decimalDigits": 2,
+      "validate": {
+        "required": false,
+        "min": 0
+      },
+      "description": "Presión utilizada en la prueba"
+    },
+    {
+      "label": "Tiempo de Prueba (minutos)",
+      "type": "number",
+      "layout": {
+        "row": "Row_6",
+        "columns": 8
+      },
+      "id": "Field_tiempo_prueba",
+      "key": "tiempo_prueba",
+      "validate": {
+        "required": false,
+        "min": 0
+      },
+      "description": "Duración de la prueba de hermeticidad"
+    },
+    {
+      "label": "Defectos Encontrados",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_7",
+        "columns": null
+      },
+      "id": "Field_defectos",
+      "key": "defectos",
+      "validate": {
+        "required": false,
+        "maxLength": 1000
+      },
+      "description": "Describa los defectos encontrados (dejar en blanco si no hay)"
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_8",
+        "columns": null
+      },
+      "id": "Field_observaciones_verificacion",
+      "key": "observaciones_verificacion",
+      "validate": {
+        "required": false,
+        "maxLength": 1000
+      },
+      "description": "Observaciones adicionales de la verificación"
+    },
+    {
+      "label": "Fotografías de Instalación (URLs)",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_9",
+        "columns": null
+      },
+      "id": "Field_fotos_instalacion",
+      "key": "fotos_instalacion",
+      "validate": {
+        "required": false,
+        "maxLength": 1000
+      },
+      "description": "URLs de fotografías de la instalación, separadas por línea"
+    }
+  ],
+  "type": "default",
+  "id": "verificacion-instalacion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

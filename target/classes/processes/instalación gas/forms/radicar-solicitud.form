@@ -1,0 +1,159 @@
+{
+  "components": [
+    {
+      "label": "Radicar Solicitud de Conexión de Gas",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# Radicar Solicitud de Conexión de Gas\n\nIngrese los datos del solicitante para radicar la solicitud en el sistema."
+    },
+    {
+      "label": "Nombre",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_nombre",
+      "key": "nombre",
+      "validate": {
+        "required": true,
+        "minLength": 2,
+        "maxLength": 100
+      },
+      "description": "Ingrese el nombre del solicitante"
+    },
+    {
+      "label": "Apellido",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_apellido",
+      "key": "apellido",
+      "validate": {
+        "required": true,
+        "minLength": 2,
+        "maxLength": 100
+      },
+      "description": "Ingrese el apellido del solicitante"
+    },
+    {
+      "label": "Email",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2b",
+        "columns": null
+      },
+      "id": "Field_cliente_email",
+      "key": "cliente_email",
+      "validate": {
+        "required": true,
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      },
+      "description": "Ingrese el correo electrónico para recibir notificaciones"
+    },
+    {
+      "label": "Teléfono",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2c",
+        "columns": null
+      },
+      "id": "Field_telefono",
+      "key": "telefono",
+      "validate": {
+        "required": true,
+        "minLength": 7,
+        "maxLength": 20
+      },
+      "description": "Ingrese el número de teléfono de contacto"
+    },
+    {
+      "label": "Dirección",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_3",
+        "columns": null
+      },
+      "id": "Field_direccion",
+      "key": "direccion",
+      "validate": {
+        "required": true,
+        "minLength": 5,
+        "maxLength": 200
+      },
+      "description": "Ingrese la dirección completa donde se realizará la instalación"
+    },
+    {
+      "label": "Ciudad",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_4",
+        "columns": null
+      },
+      "id": "Field_ciudad",
+      "key": "ciudad",
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "description": "Ingrese la ciudad"
+    },
+    {
+      "label": "Estrato",
+      "type": "select",
+      "layout": {
+        "row": "Row_5",
+        "columns": null
+      },
+      "id": "Field_estrato",
+      "key": "estrato",
+      "validate": {
+        "required": true
+      },
+      "description": "Seleccione el estrato socioeconómico",
+      "values": [
+        {
+          "label": "Estrato 1",
+          "value": "1"
+        },
+        {
+          "label": "Estrato 2",
+          "value": "2"
+        },
+        {
+          "label": "Estrato 3",
+          "value": "3"
+        },
+        {
+          "label": "Estrato 4",
+          "value": "4"
+        },
+        {
+          "label": "Estrato 5",
+          "value": "5"
+        },
+        {
+          "label": "Estrato 6",
+          "value": "6"
+        }
+      ]
+    }
+  ],
+  "type": "default",
+  "id": "radicar-solicitud",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

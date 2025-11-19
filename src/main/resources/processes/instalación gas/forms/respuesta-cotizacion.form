@@ -1,0 +1,84 @@
+{
+  "components": [
+    {
+      "label": "Respuesta a Cotización",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# Respuesta a Cotización\n\nRevise el valor de la cotización y confirme su aceptación."
+    },
+    {
+      "label": "Datos del Cliente",
+      "type": "text",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_Info",
+      "properties": {},
+      "text": "**Nombre:** {{nombre}} {{apellido}}\n\n**Dirección:** {{direccion}}\n\n**Estrato:** {{estrato}}"
+    },
+    {
+      "type": "text",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_Cotizacion_Info",
+      "properties": {},
+      "text": "## Detalle de Cotización\n\n**Valor Base de Conexión:** ${{conexion}}\n\n**Descuento Aplicado ({{descuento}}%):** ${{conexion - conexion_a_pagar}}\n\n**Total a Pagar:** ${{conexion_a_pagar}}"
+    },
+    {
+      "label": "¿Acepta la cotización?",
+      "type": "radio",
+      "layout": {
+        "row": "Row_4",
+        "columns": null
+      },
+      "id": "Field_cotizacion_aceptada",
+      "key": "cotizacion_aceptada",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Sí, acepto la cotización",
+          "value": "true"
+        },
+        {
+          "label": "No, rechazo la cotización",
+          "value": "false"
+        }
+      ],
+      "description": "Indique su decisión sobre la cotización presentada"
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_5",
+        "columns": null
+      },
+      "id": "Field_observaciones_cotizacion",
+      "key": "observaciones_cotizacion",
+      "validate": {
+        "required": false,
+        "maxLength": 500
+      },
+      "description": "Comentarios adicionales sobre la cotización"
+    }
+  ],
+  "type": "default",
+  "id": "respuesta-cotizacion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}
