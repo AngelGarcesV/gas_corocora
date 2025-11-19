@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="subsidios" name="CSE" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="Decision_CalculoCSE" name="Estrato" camunda:historyTimeToLive="30">
+    <decisionTable id="DecisionTable_1uj8h6n">
+      <input id="Input_1" label="Estrato" biodi:width="193">
+        <inputExpression id="InputExpression_1" typeRef="long">
+          <text>Estrato</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="PorcentajeSubsidio" name="PorcentajeSubsidio" typeRef="double" biodi:width="192" />
+      <output id="OutputClause_1oq0dhf" label="ContribucionAplicada" name="ContribucionAplicada" typeRef="boolean" />
+      <rule id="DecisionRule_0cnkf71">
+        <description>70% de subsidio (Estrato 1)</description>
+        <inputEntry id="UnaryTests_1ugjwa9">
+          <text>1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0p5okf9">
+          <text>0.70</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1l5tybh">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1om19bc">
+        <description>40% de subsidio (Estrato 2)</description>
+        <inputEntry id="UnaryTests_126wuge">
+          <text>2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1w0cu29">
+          <text>0.40</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0awqvhc">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dlyz53">
+        <description>0% de subsidio en gas (Estrato 3)</description>
+        <inputEntry id="UnaryTests_1wqr2ce">
+          <text>3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ve3l14">
+          <text>0.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0hroz1l">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1lqekz8">
+        <description>No recibe subsidio (Estrato 4)</description>
+        <inputEntry id="UnaryTests_014qz67">
+          <text>4</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06e2mf5">
+          <text>0.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0q4j9fk">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0k3a0ap">
+        <description>No recibe subsidio, aplica contribución (Estrato 5)</description>
+        <inputEntry id="UnaryTests_047rj1z">
+          <text>5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rlce2c">
+          <text>0.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_093b7po">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1m1usa7">
+        <description>No recibe subsidio, aplica contribución (Estrato 5)</description>
+        <inputEntry id="UnaryTests_1ictgqg">
+          <text>6</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0z38cyk">
+          <text>0.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1j6khxn">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_CalculoCSE">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
