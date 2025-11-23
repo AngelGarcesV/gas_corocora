@@ -392,7 +392,7 @@
 
                             <!-- Text/Markdown display - READ ONLY with improved styling -->
                             <div th:if="${component.type == 'text'}" class="text-display">
-                                <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-wrap;">
+                                <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-line;">
                                     <span th:utext="${#strings.replace(
                                         #strings.replace(
                                             #strings.replace(
@@ -541,15 +541,6 @@
                         <p><strong>ℹ️ Información:</strong> Esta tarea no tiene formulario asociado. Puedes agregar comentarios y completarla.</p>
                     </div>
 
-                    <!-- Generic comments field -->
-                    <div class="form-group">
-                        <label for="comments">💬 Comentarios Adicionales (Opcional)</label>
-                        <textarea id="comments"
-                                  name="comments"
-                                  rows="3"
-                                  class="form-control"
-                                  placeholder="Agrega cualquier observación o comentario relevante sobre esta tarea..."></textarea>
-                    </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">✓ Completar Tarea</button>

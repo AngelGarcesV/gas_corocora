@@ -59,6 +59,22 @@
       "description": "Ingrese el correo electrónico para recibir notificaciones"
     },
     {
+      "label": "Cédula",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2b2",
+        "columns": null
+      },
+      "id": "Field_cedula",
+      "key": "cedula",
+      "validate": {
+        "required": true,
+        "minLength": 5,
+        "maxLength": 20
+      },
+      "description": "Ingrese el número de cédula del cliente"
+    },
+    {
       "label": "Teléfono",
       "type": "textfield",
       "layout": {

@@ -30,7 +30,7 @@
       },
       "id": "Field_Cotizacion_Info",
       "properties": {},
-      "text": "# Detalle de Cotización\n\n**Valor Base de Conexión:** ${{conexion}}\n\n**Descuento Aplicado ({{descuento}}%):** ${{conexion - conexion_a_pagar}}\n\n**Total a Pagar:** ${{conexion_a_pagar}}\n\n---"
+      "text": "# Detalle de Cotización\n\n**Valor Base de Conexión:** ${{conexion}}\n\n**Descuento Aplicado ({{descuento}})\n\n**Total a Pagar:** ${{conexion_a_pagar}}\n\n---"
     },
     {
       "label": "¿Acepta la cotización?",

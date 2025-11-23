@@ -4,7 +4,9 @@ com\example\demo\delegate\ActivarServicioDelegate.class
 com\example\demo\delegate\IniciarFacturacionDelegate.class
 com\example\demo\delegate\CancelarSolicitudDelegate.class
 com\example\demo\delegate\RejectionDelegate.class
+com\example\demo\config\RestTemplateConfig.class
 com\example\demo\config\ResourceDeploymentConfig.class
+com\example\demo\service\CalculadoraService.class
 com\example\demo\repository\SolicitudInstalacionRepository.class
 com\example\demo\service\SolicitudInstalacionService.class
 com\example\demo\delegate\NotificarSolicitudInviableDelegate.class
