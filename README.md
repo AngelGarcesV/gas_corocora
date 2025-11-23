@@ -2,13 +2,13 @@
 
 Sistema de gestión de solicitudes de instalación de gas natural con Camunda BPM embebido y notificaciones por correo electrónico.
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 - **Java 21** (JDK 21 o superior)
 - **Maven 3.6+**
 - **Conexión a Internet** (para envío de correos vía Gmail)
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### 1. Configurar Credenciales de Gmail
 
@@ -20,7 +20,7 @@ spring.mail.username=TU_CORREO@gmail.com
 spring.mail.password=TU_CONTRASEÑA_DE_APLICACION
 ```
 
-> **⚠️ Importante**: Debes generar una "Contraseña de aplicación" en tu cuenta de Google:
+> ** Importante**: Debes generar una "Contraseña de aplicación" en tu cuenta de Google:
 > 1. Ve a https://myaccount.google.com/security
 > 2. Activa la verificación en 2 pasos
 > 3. En "Contraseñas de aplicaciones", genera una nueva para "Correo"
@@ -49,7 +49,7 @@ La aplicación estará disponible en:
 - Usuario: `demo`
 - Contraseña: `demo`
 
-## 📖 Guía de Ejecución del Proceso BPMN
+## Guía de Ejecución del Proceso BPMN
 
 ### Opción 1: Ejecución vía REST API (Recomendado)
 
@@ -82,7 +82,7 @@ curl -X POST "http://localhost:8080/api/solicitudes" \
 }
 ```
 
-**✉️ Email enviado automáticamente**: El usuario recibirá un correo de confirmación con el ID de su solicitud.
+** Email enviado automáticamente**: El usuario recibirá un correo de confirmación con el ID de su solicitud.
 
 #### Paso 2: Consultar Estado de la Solicitud
 
@@ -119,7 +119,7 @@ curl -X GET "http://localhost:8080/api/estadisticas"
    - **Estrato**: 3
 5. Hacer clic en **"Start"**
 
-**✉️ Email enviado**: Confirmación de solicitud radicada.
+** Email enviado**: Confirmación de solicitud radicada.
 
 #### Paso 2: Verificar Viabilidad Técnica
 
@@ -131,7 +131,7 @@ curl -X GET "http://localhost:8080/api/estadisticas"
 4. Hacer clic en **"Complete"**
 
 **Si seleccionas "No":**
-- **✉️ Email enviado**: Notificación de solicitud inviable
+- ** Email enviado**: Notificación de solicitud inviable
 - El proceso termina
 
 **Si seleccionas "Sí":**
@@ -146,7 +146,7 @@ curl -X GET "http://localhost:8080/api/estadisticas"
 3. Hacer clic en **"Complete"**
 
 **Si seleccionas "No":**
-- **✉️ Email enviado**: Solicitud de documentos faltantes
+- ** Email enviado**: Solicitud de documentos faltantes
 - El proceso puede esperar o cancelarse según la configuración
 
 **Si seleccionas "Sí":**
@@ -160,7 +160,7 @@ curl -X GET "http://localhost:8080/api/estadisticas"
    - **Descuento aplicado**: Ej: 10
 3. Hacer clic en **"Complete"**
 
-**✉️ Email enviado**: Cotización con el monto y descuento aplicado.
+** Email enviado**: Cotización con el monto y descuento aplicado.
 
 #### Paso 5: Cliente Decide sobre Cotización
 
@@ -170,7 +170,7 @@ curl -X GET "http://localhost:8080/api/estadisticas"
 3. Hacer clic en **"Complete"**
 
 **Si seleccionas "No":**
-- **✉️ Email enviado**: Cancelación de solicitud
+- ** Email enviado**: Cancelación de solicitud
 - El proceso termina
 
 **Si seleccionas "Sí":**
@@ -193,7 +193,7 @@ curl -X GET "http://localhost:8080/api/estadisticas"
 3. Hacer clic en **"Complete"**
 
 **Si seleccionas "No":**
-- **✉️ Email enviado**: Notificación de problemas en instalación
+- ** Email enviado**: Notificación de problemas en instalación
 - El proceso puede regresar a reprogramación
 
 **Si seleccionas "Sí":**
@@ -218,17 +218,17 @@ curl -X GET "http://localhost:8080/api/estadisticas"
 
 El sistema automáticamente activa el servicio.
 
-**✉️ Email enviado**: Confirmación de activación del servicio de gas.
+** Email enviado**: Confirmación de activación del servicio de gas.
 
 #### Paso 11: Facturación
 
 El sistema inicia automáticamente el proceso de facturación.
 
-**✉️ Email enviado**: Notificación de inicio de facturación.
+** Email enviado**: Notificación de inicio de facturación.
 
-**✅ Proceso completado exitosamente.**
+** Proceso completado exitosamente.**
 
-## 📊 Monitoreo del Proceso
+##  Monitoreo del Proceso
 
 ### Ver en Camunda Cockpit
 
@@ -248,7 +248,7 @@ INFO  - Proceso iniciado: f8e123a4-5678-90ab-cdef-1234567890ab
 INFO  - Email enviado a juanperez@example.com
 ```
 
-## 🗄️ Base de Datos
+## Base de Datos
 
 La aplicación usa **H2 in-memory** para desarrollo. Los datos se almacenan en:
 
@@ -278,7 +278,7 @@ SELECT * FROM historial_proceso WHERE solicitud_id = 'SOL-2024-001' ORDER BY fec
 SELECT estado, COUNT(*) as total FROM solicitud_instalacion GROUP BY estado;
 ```
 
-## 📧 Notificaciones por Email
+## Notificaciones por Email
 
 El sistema envía correos automáticamente en los siguientes eventos:
 
@@ -292,7 +292,7 @@ El sistema envía correos automáticamente en los siguientes eventos:
 | **Servicio Activado** | Cliente | Confirmación de activación |
 | **Facturación Iniciada** | Cliente | Información de cobro |
 
-## 🛠️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 springboot-bpmn/
@@ -330,7 +330,7 @@ springboot-bpmn/
 └── pom.xml                                  # Dependencias Maven
 ```
 
-## 🧪 Pruebas
+## Pruebas
 
 ### Probar Endpoints REST
 
@@ -353,7 +353,7 @@ curl http://localhost:8080/api/solicitudes
 curl http://localhost:8080/api/estadisticas
 ```
 
-## ❓ Solución de Problemas
+## Solución de Problemas
 
 ### El proceso no aparece en Camunda
 
@@ -381,7 +381,7 @@ java -version
 
 Debe mostrar: `openjdk version "21.x.x"`
 
-## 📚 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Spring Boot 2.7.18**
 - **Camunda BPM 7.18.0**
@@ -392,10 +392,10 @@ Debe mostrar: `openjdk version "21.x.x"`
 - **Thymeleaf**
 - **Maven**
 
-## 👨‍💻 Autor
+## Autor
 
 Sistema desarrollado para Gas Corocora - Gestión de Instalaciones de Gas Natural
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto es de uso académico para la Universidad.
