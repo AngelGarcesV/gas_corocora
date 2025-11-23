@@ -1,0 +1,43 @@
+# Ignore build outputs
+/target/
+**/target/
+
+# Ignore jars and other build artifacts
+*.jar
+*.war
+*.ear
+*.class
+*.original
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Maven wrapper
+.mvn/
+
+# H2 database files (development DBs)
+camunda-db/*.mv.db
+camunda-db/*.trace.db
+transactional-db/*.mv.db
+transactional-db/*.trace.db
+
+# Static/generated files
+node_modules/
+dist/
+
+# Git LFS attributes (if you enable LFS)
+.gitattributes
+
