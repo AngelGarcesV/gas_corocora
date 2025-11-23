@@ -20,7 +20,7 @@
       },
       "id": "Field_Info",
       "properties": {},
-      "text": "## 👤 Datos del Cliente\n\n**Nombre Completo:** {{nombre}} {{apellido}}\n\n**Dirección de Instalación:** {{direccion}}\n\n**Ciudad:** {{ciudad}}\n\n**Estrato Socioeconómico:** {{estrato}}\n\n**Teléfono:** {{telefono}}\n\n**Email:** {{email}}"
+      "text": "# 👤 Datos del Cliente\n\n**Nombre Completo:** {{nombre}} {{apellido}}\n\n**Dirección de Instalación:** {{direccion}}\n\n**Ciudad:** {{ciudad}}\n\n**Estrato Socioeconómico:** {{estrato}}\n\n**Teléfono:** {{telefono}}\n\n**Email:** {{email}}"
     },
     {
       "label": "Número de Cliente Generado",

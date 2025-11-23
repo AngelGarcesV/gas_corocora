@@ -56,6 +56,38 @@
             <version>${camunda.version}</version>
         </dependency>
         
+        <!-- Camunda Connect para HTTP Connector -->
+        <dependency>
+            <groupId>org.camunda.connect</groupId>
+            <artifactId>camunda-connect-http-client</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.camunda.connect</groupId>
+            <artifactId>camunda-connect-connectors-all</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        
+        <!-- Camunda Spin para procesamiento JSON -->
+        <dependency>
+            <groupId>org.camunda.spin</groupId>
+            <artifactId>camunda-spin-dataformat-all</artifactId>
+            <version>1.23.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-plugin-spin</artifactId>
+            <version>${camunda.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-plugin-connect</artifactId>
+            <version>${camunda.version}</version>
+        </dependency>
+        
         <!-- Base de datos H2 -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -92,6 +124,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     

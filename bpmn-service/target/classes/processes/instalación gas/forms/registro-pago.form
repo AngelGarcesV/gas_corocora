@@ -29,7 +29,7 @@
       },
       "id": "Field_Monto_Info",
       "properties": {},
-      "text": "## Valor a Pagar\n\n**Monto según cotización aprobada:** ${{conexion_a_pagar}}"
+      "text": "# Valor a Pagar\n\n**Monto según cotización aprobada:** ${{conexion_a_pagar}}"
     },
     {
       "label": "Monto Recibido",

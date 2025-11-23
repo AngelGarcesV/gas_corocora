@@ -43,7 +43,7 @@
                             <th:block th:each="component : ${form.components}">
                                 <!-- Text/Markdown display only - with variable interpolation -->
                                 <div th:if="${component.type == 'text'}" class="form-group">
-                                    <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-wrap;">
+                                    <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-line;">
                                         <!-- Simple markdown rendering with variable interpolation -->
                                         <span th:utext="${#strings.replace(
                                             #strings.replace(

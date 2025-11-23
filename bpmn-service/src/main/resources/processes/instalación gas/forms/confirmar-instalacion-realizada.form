@@ -1,0 +1,52 @@
+{
+  "components": [
+    {
+      "text": "## Confirmar Instalación Realizada\n\nIndique si la instalación fue realizada correctamente después de resolver los problemas reportados.",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Descripcion"
+    },
+    {
+      "label": "¿La instalación fue realizada correctamente?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "instalacion_realizada",
+      "key": "instalacion_realizada",
+      "defaultValue": false,
+      "description": "Marque esta casilla solo si la instalación fue completada exitosamente",
+      "validate": {
+        "required": true,
+        "validationType": "custom",
+        "pattern": "true",
+        "validationMessage": "Debe confirmar que la instalación fue realizada correctamente para continuar"
+      }
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "observaciones_instalacion",
+      "key": "observaciones_instalacion",
+      "description": "Describa el estado de la instalación o los problemas pendientes (opcional)"
+    }
+  ],
+  "type": "default",
+  "id": "confirmar-instalacion-realizada",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 16
+}
