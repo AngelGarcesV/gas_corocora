@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Corocora - Agent Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora - Portal Interno</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/processes}">Procesos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h2>Bienvenido al Portal de Agentes</h2>
+                <p>Sistema de gestión de solicitudes de instalación de gas natural</p>
+            </div>
+
+            <div class="dashboard">
+                <div class="card">
+                    <h3>Tareas Pendientes</h3>
+                    <div class="stat" th:text="${taskCount}">0</div>
+                    <a th:href="@{/tasks}" class="btn btn-primary">Ver Tareas</a>
+                </div>
+
+                <div class="card">
+                    <h3>Iniciar Proceso</h3>
+                    <p>Radicar nueva solicitud de instalación</p>
+                    <a th:href="@{/processes}" class="btn btn-secondary">Ver Procesos</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

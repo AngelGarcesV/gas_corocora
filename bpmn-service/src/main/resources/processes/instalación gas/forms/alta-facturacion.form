@@ -1,0 +1,245 @@
+{
+  "components": [
+    {
+      "label": "Registro en Sistema de Facturación",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# Registro en Sistema de Facturación\n\nRegistre al cliente en el sistema de facturación para activar el servicio."
+    },
+    {
+      "label": "Datos del Cliente",
+      "type": "text",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_Info",
+      "properties": {},
+      "text": "## 👤 Datos del Cliente\n\n**Nombre Completo:** {{nombre}} {{apellido}}\n\n**Dirección de Instalación:** {{direccion}}\n\n**Ciudad:** {{ciudad}}\n\n**Estrato Socioeconómico:** {{estrato}}\n\n**Teléfono:** {{telefono}}\n\n**Email:** {{email}}"
+    },
+    {
+      "label": "Número de Cliente Generado",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2",
+        "columns": 8
+      },
+      "id": "Field_numero_cliente",
+      "key": "numero_cliente",
+      "validate": {
+        "required": true,
+        "minLength": 5,
+        "maxLength": 50
+      },
+      "description": "Número único de cliente en el sistema"
+    },
+    {
+      "label": "Número de Medidor",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_2",
+        "columns": 8
+      },
+      "id": "Field_medidor_facturacion",
+      "key": "numero_medidor",
+      "disabled": true,
+      "description": "Número del medidor instalado"
+    },
+    {
+      "label": "Ciclo de Facturación",
+      "type": "select",
+      "layout": {
+        "row": "Row_3",
+        "columns": 8
+      },
+      "id": "Field_ciclo_facturacion",
+      "key": "ciclo_facturacion",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Ciclo 1 (Días 1-10)",
+          "value": "ciclo1"
+        },
+        {
+          "label": "Ciclo 2 (Días 11-20)",
+          "value": "ciclo2"
+        },
+        {
+          "label": "Ciclo 3 (Días 21-31)",
+          "value": "ciclo3"
+        }
+      ],
+      "description": "Ciclo de facturación asignado"
+    },
+    {
+      "label": "Tarifa Aplicable",
+      "type": "select",
+      "layout": {
+        "row": "Row_3",
+        "columns": 8
+      },
+      "id": "Field_tarifa",
+      "key": "tarifa",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Tarifa Residencial Estrato 1",
+          "value": "residencial_e1"
+        },
+        {
+          "label": "Tarifa Residencial Estrato 2",
+          "value": "residencial_e2"
+        },
+        {
+          "label": "Tarifa Residencial Estrato 3",
+          "value": "residencial_e3"
+        },
+        {
+          "label": "Tarifa Residencial Estrato 4",
+          "value": "residencial_e4"
+        },
+        {
+          "label": "Tarifa Residencial Estrato 5",
+          "value": "residencial_e5"
+        },
+        {
+          "label": "Tarifa Residencial Estrato 6",
+          "value": "residencial_e6"
+        }
+      ],
+      "description": "Tarifa según estrato del cliente"
+    },
+    {
+      "label": "Fecha de Activación del Servicio",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_4",
+        "columns": null
+      },
+      "id": "Field_fecha_activacion",
+      "key": "fecha_activacion",
+      "validate": {
+        "required": true
+      },
+      "dateLabel": "Fecha de activación",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset",
+      "description": "Fecha y hora de activación del servicio"
+    },
+    {
+      "label": "Método de Pago Mensual Preferido",
+      "type": "select",
+      "layout": {
+        "row": "Row_5",
+        "columns": null
+      },
+      "id": "Field_metodo_pago_mensual",
+      "key": "metodo_pago_mensual",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Débito Automático",
+          "value": "debito_automatico"
+        },
+        {
+          "label": "Pago en Oficina",
+          "value": "oficina"
+        },
+        {
+          "label": "Pago en Línea",
+          "value": "online"
+        },
+        {
+          "label": "Corresponsal Bancario",
+          "value": "corresponsal"
+        },
+        {
+          "label": "Transferencia Bancaria",
+          "value": "transferencia"
+        }
+      ],
+      "description": "Método de pago preferido para facturas mensuales"
+    },
+    {
+      "label": "Correo Electrónico para Factura",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_6",
+        "columns": 8
+      },
+      "id": "Field_email_factura",
+      "key": "email_factura",
+      "validate": {
+        "required": true,
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      },
+      "description": "Correo para envío de facturas"
+    },
+    {
+      "label": "Teléfono de Contacto",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_6",
+        "columns": 8
+      },
+      "id": "Field_telefono_contacto",
+      "key": "telefono_contacto",
+      "validate": {
+        "required": true,
+        "minLength": 7,
+        "maxLength": 20
+      },
+      "description": "Teléfono de contacto del cliente"
+    },
+    {
+      "label": "Cuenta Bancaria (para débito automático)",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_7",
+        "columns": null
+      },
+      "id": "Field_cuenta_bancaria",
+      "key": "cuenta_bancaria",
+      "validate": {
+        "required": false,
+        "maxLength": 50
+      },
+      "description": "Número de cuenta bancaria (opcional, solo si eligió débito automático)"
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_8",
+        "columns": null
+      },
+      "id": "Field_observaciones_facturacion",
+      "key": "observaciones_facturacion",
+      "validate": {
+        "required": false,
+        "maxLength": 500
+      },
+      "description": "Observaciones adicionales del registro"
+    }
+  ],
+  "type": "default",
+  "id": "alta-facturacion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

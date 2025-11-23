@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Tareas - Gas Corocora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora - Portal Interno</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/tasks}" class="active">Mis Tareas</a></li>
+                    <li><a th:href="@{/processes}">Procesos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Mis Tareas Pendientes</h2>
+            
+            <!-- Role Filter Menu -->
+            <div class="role-filter">
+                <h3>Filtrar por Área</h3>
+                <div class="role-buttons">
+                    <a th:href="@{/tasks}" 
+                       th:class="${currentRole == null ? 'btn btn-primary active' : 'btn btn-secondary'}">
+                        📋 Todas las Tareas
+                    </a>
+                    <a th:href="@{/tasks(role='comercial')}" 
+                       th:class="${currentRole == 'comercial' ? 'btn btn-primary active' : 'btn btn-secondary'}">
+                        💼 Área Comercial
+                    </a>
+                    <a th:href="@{/tasks(role='tecnico')}" 
+                       th:class="${currentRole == 'tecnico' ? 'btn btn-primary active' : 'btn btn-secondary'}">
+                        🔧 Área Técnica
+                    </a>
+                    <a th:href="@{/tasks(role='facturacion')}" 
+                       th:class="${currentRole == 'facturacion' ? 'btn btn-primary active' : 'btn btn-secondary'}">
+                        💰 Área de Facturación
+                    </a>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <div th:if="${tasks.empty}" class="empty-state">
+                    <p>No tienes tareas pendientes en este momento.</p>
+                </div>
+
+                <div th:each="task : ${tasks}" class="task-card">
+                    <div class="task-header">
+                        <h3 th:text="${task.name}">Nombre de la tarea</h3>
+                        <span class="task-priority" th:text="${task.priority}">50</span>
+                    </div>
+                    <div class="task-body">
+                        <p><strong>Proceso:</strong> <span th:text="${task.processDefinitionId}">-</span></p>
+                        <p><strong>Creada:</strong> <span th:text="${task.created}">-</span></p>
+                        <p th:if="${task.assignee}"><strong>Asignada a:</strong> <span th:text="${task.assignee}">-</span></p>
+                    </div>
+                    <div class="task-actions">
+                        <a th:href="@{/tasks/{id}(id=${task.id})}" class="btn btn-primary">Ver Detalles</a>
+                        <form th:if="${task.assignee == null}" th:action="@{/tasks/{id}/claim(id=${task.id})}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-secondary">Reclamar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "components": [
+    {
+      "label": "Solicitar Corrección al Cliente",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# ⚠️ Solicitar Corrección al Cliente\n\nNotifique al cliente sobre los cambios necesarios en la red interna."
+    },
+    {
+      "type": "text",
+      "layout": {
+        "row": "Row_0b",
+        "columns": null
+      },
+      "id": "Field_Cliente_Info",
+      "properties": {},
+      "text": "**Cliente:** {{nombre}} {{apellido}}\n\n**Dirección:** {{direccion}}\n\n**Teléfono:** {{telefono}}"
+    },
+    {
+      "label": "Descripción de Cambios a Realizar",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_descripcion_cambios",
+      "key": "descripcion_cambios",
+      "validate": {
+        "required": true,
+        "minLength": 10,
+        "maxLength": 1000
+      },
+      "description": "Describa detalladamente las correcciones que el cliente debe realizar en la instalación de la red interna"
+    },
+    {
+      "label": "Fecha Límite para Corrección",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_fecha_limite_correccion",
+      "key": "fecha_limite_correccion",
+      "validate": {
+        "required": true
+      },
+      "description": "Fecha límite para que el cliente realice las correcciones",
+      "dateLabel": "Fecha límite",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset"
+    }
+  ],
+  "type": "default",
+  "id": "solicitar-correccion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

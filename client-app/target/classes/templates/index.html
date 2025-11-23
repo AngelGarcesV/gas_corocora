@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Corocora - Portal del Cliente</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora</h1>
+                <ul>
+                    <li><a th:href="@{/}" class="active">Inicio</a></li>
+                    <li><a th:href="@{/new-request}">Nueva Solicitud</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}">Consultar Trámite</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h2>Bienvenido a Gas Corocora</h2>
+                <p>Portal de atención al cliente para solicitudes de instalación de gas natural</p>
+            </div>
+
+            <div class="services">
+                <div class="service-card">
+                    <h3>📝 Nueva Solicitud</h3>
+                    <p>Radique su solicitud de instalación de gas natural de manera rápida y sencilla.</p>
+                    <a th:href="@{/new-request}" class="btn btn-primary">Radicar Solicitud</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>✅ Mis Tareas</h3>
+                    <p>Vea las tareas pendientes que requieren su atención o respuesta.</p>
+                    <a th:href="@{/tasks}" class="btn btn-primary">Ver Tareas</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>🔍 Consultar Trámite</h3>
+                    <p>Consulte el estado de su solicitud ingresando su número de radicado.</p>
+                    <a th:href="@{/track}" class="btn btn-secondary">Consultar Estado</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>📞 Contacto</h3>
+                    <p>Comuníquese con nosotros para resolver cualquier duda o inquietud.</p>
+                    <div class="contact-info">
+                        <p><strong>Teléfono:</strong> 555-1234</p>
+                        <p><strong>Email:</strong> info@gascorocora.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

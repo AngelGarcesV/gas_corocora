@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Solicitud - Gas Corocora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/new-request}" class="active">Nueva Solicitud</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}">Consultar Trámite</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Solicitud de Instalación de Gas Natural</h2>
+
+            <div th:if="${success}" class="alert alert-success">
+                <h3>✓ Solicitud Radicada Exitosamente</h3>
+                <p th:text="${message}"></p>
+                <p><strong>Por favor anote su número de radicado para futuras consultas.</strong></p>
+                <a th:href="@{/track}" class="btn btn-primary">Consultar Estado</a>
+            </div>
+
+            <div th:if="${error}" class="alert alert-error">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div class="form-container" th:unless="${success}">
+                <form th:action="@{/new-request}" method="post">
+                    <div class="form-section">
+                        <h3>Datos Personales</h3>
+                        
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo: *</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cedula">Número de Cédula: *</label>
+                            <input type="text" id="cedula" name="cedula" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono de Contacto: *</label>
+                            <input type="tel" id="telefono" name="telefono" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico: *</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Datos del Inmueble</h3>
+                        
+                        <div class="form-group">
+                            <label for="direccion">Dirección Completa: *</label>
+                            <input type="text" id="direccion" name="direccion" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estrato">Estrato Socioeconómico: *</label>
+                            <select id="estrato" name="estrato" class="form-control" required>
+                                <option value="">Seleccione...</option>
+                                <option value="1">Estrato 1</option>
+                                <option value="2">Estrato 2</option>
+                                <option value="3">Estrato 3</option>
+                                <option value="4">Estrato 4</option>
+                                <option value="5">Estrato 5</option>
+                                <option value="6">Estrato 6</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Radicar Solicitud</button>
+                        <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+
+                    <p class="form-note">* Campos obligatorios</p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

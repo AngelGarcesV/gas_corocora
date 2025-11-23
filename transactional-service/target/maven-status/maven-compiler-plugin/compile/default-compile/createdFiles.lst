@@ -1,0 +1,12 @@
+com\gascorocora\transactional\dto\CoberturaResponse.class
+com\gascorocora\transactional\controller\CoberturaController.class
+com\gascorocora\transactional\controller\NotificacionController.class
+com\gascorocora\transactional\dto\SolicitudDTO.class
+com\gascorocora\transactional\dto\NotificacionRequest.class
+com\gascorocora\transactional\service\NotificacionService.class
+com\gascorocora\transactional\TransactionalApplication.class
+com\gascorocora\transactional\repository\SolicitudRepository.class
+com\gascorocora\transactional\model\Solicitud.class
+com\gascorocora\transactional\service\CoberturaService.class
+com\gascorocora\transactional\controller\SolicitudController.class
+com\gascorocora\transactional\service\SolicitudService.class

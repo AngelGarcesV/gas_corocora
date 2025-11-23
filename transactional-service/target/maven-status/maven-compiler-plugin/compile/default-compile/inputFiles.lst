@@ -1,0 +1,12 @@
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\TransactionalApplication.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\model\Solicitud.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\repository\SolicitudRepository.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\service\CoberturaService.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\service\NotificacionService.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\service\SolicitudService.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\dto\NotificacionRequest.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\controller\CoberturaController.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\controller\NotificacionController.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\controller\SolicitudController.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\dto\CoberturaResponse.java
+D:\Universidad\proyecto software\springboot-bpmn\transactional-service\src\main\java\com\gascorocora\transactional\dto\SolicitudDTO.java
