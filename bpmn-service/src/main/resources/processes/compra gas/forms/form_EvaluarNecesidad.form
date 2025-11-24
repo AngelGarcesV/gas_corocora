@@ -1,0 +1,103 @@
+{
+  "components": [
+    {
+      "text": "# Evaluar Necesidad de Compra\nVerifique si realmente se requiere comprar gas y justifique la decisión.",
+      "id": "Text_Encabezado",
+      "type": "text",
+      "layout": {
+        "row": "Row_0p9mrqh"
+      }
+    },
+    {
+      "label": "Cantidad estimada de gas en deposito(kg)",
+      "id": "Number_CantidadEstimada",
+      "type": "number",
+      "key": "cantidad_estimada",
+      "description": "Total aproximado que se necesita.",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_12rxw6d"
+      }
+    },
+    {
+      "label": "Fecha de revisión (AAAA-MM-DD)",
+      "id": "Text_FechaRequerido",
+      "type": "textfield",
+      "key": "fecha_requerido",
+      "description": "Ejemplo: 2025-12-31",
+      "validate": {
+        "required": true,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "layout": {
+        "row": "Row_0fcjwyt"
+      }
+    },
+    {
+      "label": "Justificación de la necesidad",
+      "id": "TextArea_Justificacion",
+      "type": "textfield",
+      "key": "justificacion_necesidad",
+      "description": "Explique por qué se necesita la compra.",
+      "validate": {
+        "required": true
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_0ttxxew"
+      }
+    },
+    {
+      "label": "Observaciones adicionales",
+      "id": "TextArea_Observaciones",
+      "type": "textfield",
+      "key": "observaciones",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_010wwt6"
+      }
+    },
+    {
+      "label": "¿Se detectó necesidad real de compra?",
+      "values": [
+        {
+          "label": "Sí, proceder a comparar ofertas",
+          "value": "si"
+        },
+        {
+          "label": "No, descartar compra por ahora",
+          "value": "no"
+        }
+      ],
+      "id": "Select_Necesidad",
+      "type": "select",
+      "key": "necesidad_detectada",
+      "description": "Seleccione solo si existe demanda justificada.",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1o2xo07"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_EvaluarNecesidad",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}

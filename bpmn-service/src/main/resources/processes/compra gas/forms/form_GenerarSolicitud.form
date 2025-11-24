@@ -1,0 +1,106 @@
+{
+  "components": [
+    {
+      "text": "# Generar Solicitud de Aprobación\nComplete la información de la compra de gas para enviar a aprobación.",
+      "id": "Text_Encabezado",
+      "type": "text",
+      "layout": {
+        "row": "Row_0"
+      }
+    },
+    {
+      "label": "Proveedor seleccionado",
+      "values": [
+        {
+          "label": "GasTotal - $1200 - 3 días - 12 meses",
+          "value": "GasTotal"
+        },
+        {
+          "label": "GasCity - $1150 - 5 días - 6 meses",
+          "value": "GasCity"
+        },
+        {
+          "label": "Distribuidora X - $1180 - 2 días - 18 meses",
+          "value": "Distribuidora X"
+        }
+      ],
+      "type": "select",
+      "id": "Select_Proveedor",
+      "key": "proveedor_seleccionado",
+      "description": "Seleccione el proveedor con el que desea realizar la compra",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1"
+      }
+    },
+    {
+      "label": "Cantidad de gas (kg)",
+      "type": "number",
+      "id": "Number_Cantidad",
+      "key": "cantidad_gas",
+      "description": "Ingrese la cantidad de gas en kilogramos",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    },
+    {
+      "label": "Costo total estimado",
+      "type": "number",
+      "id": "Number_CostoTotal",
+      "key": "costo_total",
+      "description": "Costo total estimado de la compra",
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "layout": {
+        "row": "Row_3"
+      }
+    },
+    {
+      "label": "Tiempo de entrega (días)",
+      "type": "number",
+      "id": "Number_TiempoEntrega",
+      "key": "tiempo_entrega_dias",
+      "description": "Tiempo estimado de entrega en días",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_4"
+      }
+    },
+    {
+      "label": "Justificación de la solicitud",
+      "id": "TextArea_Justificacion",
+      "type": "textfield",
+      "key": "justificacion_solicitud",
+      "description": "Explique los motivos de esta solicitud de compra",
+      "validate": {
+        "required": true
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_5"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_SolicitudAprobacion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}

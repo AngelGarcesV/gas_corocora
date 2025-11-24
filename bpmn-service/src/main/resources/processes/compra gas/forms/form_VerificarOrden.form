@@ -1,0 +1,60 @@
+{
+  "components": [
+    {
+      "text": "# Verificar Pedido\nVerifica el pedido y determina si hay alguna discrepancia.",
+      "id": "Text_Encabezado",
+      "type": "text",
+      "layout": {
+        "row": "Row_0"
+      }
+    },
+    {
+      "label": "¿Existe una discrepancia?",
+      "values": [
+        {
+          "label": "Sí, existe discrepancia",
+          "value": true
+        },
+        {
+          "label": "No, pedido correcto",
+          "value": false
+        }
+      ],
+      "type": "radio",
+      "id": "Radio_Discrepancia",
+      "key": "discrepanciaExistente",
+      "description": "Selecciona 'Sí' si existe una discrepancia en el pedido.",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1"
+      }
+    },
+    {
+      "label": "Detalles de la discrepancia",
+      "id": "TextArea_DetallesDiscrepancia",
+      "type": "textfield",
+      "key": "detallesDiscrepancia",
+      "description": "Proporciona detalles sobre la discrepancia detectada (si aplica).",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_VerificarPedido",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}

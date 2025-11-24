@@ -1,0 +1,60 @@
+{
+  "components": [
+    {
+      "text": "# Notificar Decisión de Aprobación\nIntroduce la decisión de aprobación y justifica tu elección.",
+      "id": "Text_Encabezado",
+      "type": "text",
+      "layout": {
+        "row": "Row_0"
+      }
+    },
+    {
+      "label": "¿Solicitud Aprobada?",
+      "values": [
+        {
+          "label": "Sí, aprobar solicitud",
+          "value": true
+        },
+        {
+          "label": "No, rechazar solicitud",
+          "value": false
+        }
+      ],
+      "type": "radio",
+      "id": "Radio_Aprobada",
+      "key": "solicitudAprobada",
+      "description": "Selecciona 'Sí' si la solicitud es aprobada.",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1"
+      }
+    },
+    {
+      "label": "Justificación de la decisión",
+      "id": "TextArea_Justificacion",
+      "type": "textfield",
+      "key": "justificacion",
+      "description": "Proporciona una justificación para tu decisión.",
+      "validate": {
+        "required": true
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_NotificarDecision",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}

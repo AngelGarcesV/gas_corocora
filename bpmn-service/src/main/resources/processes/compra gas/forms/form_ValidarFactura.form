@@ -1,0 +1,60 @@
+{
+  "components": [
+    {
+      "text": "# Validar Factura\nVerifica la factura y determina si hay alguna irregularidad detectada.",
+      "id": "Text_Header",
+      "type": "text",
+      "layout": {
+        "row": "Row_0"
+      }
+    },
+    {
+      "label": "¿Irregularidad detectada?",
+      "values": [
+        {
+          "label": "Sí, se detectó irregularidad",
+          "value": true
+        },
+        {
+          "label": "No, factura correcta",
+          "value": false
+        }
+      ],
+      "type": "radio",
+      "id": "Radio_IrregularityDetected",
+      "key": "irregularidadDetectada",
+      "description": "Selecciona 'Sí' si se detectó alguna irregularidad en la factura.",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1"
+      }
+    },
+    {
+      "label": "Detalles de la irregularidad",
+      "id": "TextArea_Details",
+      "type": "textfield",
+      "key": "detallesIrregularidad",
+      "description": "Proporciona detalles sobre la irregularidad detectada (si aplica).",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_ValidarFactura",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}
