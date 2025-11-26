@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Solicitud - Gas Corocora</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <header>
         <nav>
@@ -13,9 +15,11 @@
                 <h1>Gas Corocora</h1>
                 <ul>
                     <li><a th:href="@{/}">Inicio</a></li>
-                    <li><a th:href="@{/new-request}" class="active">Nueva Solicitud</a></li>
+                    <li><a th:href="@{/new-request}" class="active">Solicitud Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/new}">Solicitud Compra</a></li>
                     <li><a th:href="@{/tasks}">Mis Tareas</a></li>
-                    <li><a th:href="@{/track}">Consultar Trámite</a></li>
+                    <li><a th:href="@{/track}">Consultar Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/track}">Consultar Compra</a></li>
                 </ul>
             </div>
         </nav>
@@ -40,7 +44,7 @@
                 <form th:action="@{/new-request}" method="post">
                     <div class="form-section">
                         <h3>Datos Personales</h3>
-                        
+
                         <div class="form-group">
                             <label for="nombre">Nombre Completo: *</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" required>
@@ -64,7 +68,7 @@
 
                     <div class="form-section">
                         <h3>Datos del Inmueble</h3>
-                        
+
                         <div class="form-group">
                             <label for="direccion">Dirección Completa: *</label>
                             <input type="text" id="direccion" name="direccion" class="form-control" required>
@@ -101,4 +105,5 @@
         </div>
     </footer>
 </body>
+
 </html>

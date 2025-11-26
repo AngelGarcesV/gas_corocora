@@ -1,0 +1,147 @@
+{
+  "components": [
+    {
+      "text": "# Evaluar Necesidad de Compra\nVerifique si realmente se requiere comprar gas y justifique la decisión.",
+      "id": "Text_Encabezado",
+      "type": "text",
+      "layout": {
+        "row": "Row_0p9mrqh"
+      }
+    },
+    {
+      "label": "Cantidad actual en depósito (m³)",
+      "id": "Number_CantidadActual",
+      "type": "number",
+      "key": "cantidad_actual_deposito",
+      "description": "Cantidad actual de gas disponible en el depósito en metros cúbicos.",
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "layout": {
+        "row": "Row_000"
+      }
+    },
+    {
+      "label": "Cantidad mínima requerida (m³)",
+      "id": "Number_CantidadMinima",
+      "type": "number",
+      "key": "cantidad_minima_requerida",
+      "description": "Cantidad mínima necesaria para operaciones en metros cúbicos.",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_001"
+      }
+    },
+    {
+      "label": "Cantidad estimada a comprar (m³)",
+      "id": "Number_CantidadEstimada",
+      "type": "number",
+      "key": "cantidad_estimada",
+      "description": "Total aproximado que se necesita en metros cúbicos.",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 10000
+      },
+      "layout": {
+        "row": "Row_12rxw6d"
+      }
+    },
+    {
+      "label": "Consumo promedio mensual (m³)",
+      "id": "Number_ConsumoMensual",
+      "type": "number",
+      "key": "consumo_promedio_mensual",
+      "description": "Basado en meses anteriores en metros cúbicos",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_002"
+      }
+    },
+    {
+      "label": "Fecha de revisión",
+      "id": "DateTime_FechaRequerido",
+      "type": "datetime",
+      "key": "fecha_requerido",
+      "description": "Seleccione la fecha de revisión",
+      "format": "yyyy-MM-dd HH:mm",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_0fcjwyt"
+      }
+    },
+    {
+      "label": "Justificación de la necesidad",
+      "id": "TextArea_Justificacion",
+      "type": "textfield",
+      "key": "justificacion_necesidad",
+      "description": "Explique por qué se necesita la compra (mínimo 20 caracteres).",
+      "validate": {
+        "required": true,
+        "minLength": 20
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_0ttxxew"
+      }
+    },
+    {
+      "label": "Observaciones adicionales",
+      "id": "TextArea_Observaciones",
+      "type": "textfield",
+      "key": "observaciones",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_010wwt6"
+      }
+    },
+    {
+      "label": "¿Se detectó necesidad real de compra?",
+      "values": [
+        {
+          "label": "Sí, proceder a comparar ofertas",
+          "value": "si"
+        },
+        {
+          "label": "No, descartar compra por ahora",
+          "value": "no"
+        }
+      ],
+      "id": "Select_Necesidad",
+      "type": "select",
+      "key": "necesidad_detectada",
+      "description": "Seleccione solo si existe demanda justificada.",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1o2xo07"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_EvaluarNecesidad",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}

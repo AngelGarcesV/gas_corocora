@@ -392,7 +392,7 @@
 
                             <!-- Text/Markdown display - READ ONLY with improved styling -->
                             <div th:if="${component.type == 'text'}" class="text-display">
-                                <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-wrap;">
+                                <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-line;">
                                     <span th:utext="${#strings.replace(
                                         #strings.replace(
                                             #strings.replace(

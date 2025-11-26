@@ -18,6 +18,9 @@ public class CamundaClientConfig {
     @Value("${camunda.rest.password}")
     private String password;
 
+    @Value("${bpmn.service.url:http://localhost:8080}")
+    private String bpmnServiceUrl;
+
     @Bean
     public WebClient camundaWebClient() {
         ExchangeStrategies strategies = ExchangeStrategies.builder()
@@ -27,6 +30,18 @@ public class CamundaClientConfig {
         return WebClient.builder()
                 .baseUrl(camundaRestUrl)
                 .defaultHeaders(headers -> headers.setBasicAuth(username, password))
+                .exchangeStrategies(strategies)
+                .build();
+    }
+
+    @Bean
+    public WebClient bpmnWebClient() {
+        ExchangeStrategies strategies = ExchangeStrategies.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(16 * 1024 * 1024))
+                .build();
+
+        return WebClient.builder()
+                .baseUrl(bpmnServiceUrl)
                 .exchangeStrategies(strategies)
                 .build();
     }

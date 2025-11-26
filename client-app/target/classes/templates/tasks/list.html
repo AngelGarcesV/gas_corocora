@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Tareas - Gas Corocora</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <header>
         <nav>
@@ -13,9 +15,11 @@
                 <h1>Gas Corocora - Portal del Cliente</h1>
                 <ul>
                     <li><a th:href="@{/}">Inicio</a></li>
-                    <li><a th:href="@{/new-request}">Nueva Solicitud</a></li>
-                    <li><a th:href="@{/track}">Consultar Estado</a></li>
+                    <li><a th:href="@{/new-request}">Solicitud Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/new}">Solicitud Compra</a></li>
                     <li><a th:href="@{/tasks}" class="active">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}">Consultar Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/track}">Consultar Compra</a></li>
                 </ul>
             </div>
         </nav>
@@ -38,7 +42,8 @@
                     <div class="task-body">
                         <p><strong>ID:</strong> <span th:text="${task.id}">-</span></p>
                         <p><strong>Creada:</strong> <span th:text="${task.created}">-</span></p>
-                        <p th:if="${task.description}"><strong>Descripción:</strong> <span th:text="${task.description}">-</span></p>
+                        <p th:if="${task.description}"><strong>Descripción:</strong> <span
+                                th:text="${task.description}">-</span></p>
                     </div>
                     <div class="task-actions">
                         <a th:href="@{/tasks/{id}(id=${task.id})}" class="btn btn-primary">Ver Detalles</a>
@@ -54,4 +59,5 @@
         </div>
     </footer>
 </body>
+
 </html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Tarea - Gas Corocora</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <header>
         <nav>
@@ -13,9 +15,11 @@
                 <h1>Gas Corocora - Portal del Cliente</h1>
                 <ul>
                     <li><a th:href="@{/}">Inicio</a></li>
-                    <li><a th:href="@{/new-request}">Nueva Solicitud</a></li>
-                    <li><a th:href="@{/track}">Consultar Estado</a></li>
+                    <li><a th:href="@{/new-request}">Solicitud Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/new}">Solicitud Compra</a></li>
                     <li><a th:href="@{/tasks}" class="active">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}">Consultar Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/track}">Consultar Compra</a></li>
                 </ul>
             </div>
         </nav>
@@ -32,7 +36,8 @@
                     <p><strong>Proceso:</strong> <span th:text="${task.processDefinitionId}">-</span></p>
                     <p><strong>Instancia:</strong> <span th:text="${task.processInstanceId}">-</span></p>
                     <p><strong>Creada:</strong> <span th:text="${task.created}">-</span></p>
-                    <p th:if="${task.description}"><strong>Descripción:</strong> <span th:text="${task.description}">-</span></p>
+                    <p th:if="${task.description}"><strong>Descripción:</strong> <span
+                            th:text="${task.description}">-</span></p>
                 </div>
 
                 <div class="detail-section">
@@ -43,7 +48,8 @@
                             <th:block th:each="component : ${form.components}">
                                 <!-- Text/Markdown display only - with variable interpolation -->
                                 <div th:if="${component.type == 'text'}" class="form-group">
-                                    <div th:with="text=${component.containsKey('text') ? component.text : ''}" style="white-space: pre-wrap;">
+                                    <div th:with="text=${component.containsKey('text') ? component.text : ''}"
+                                        style="white-space: pre-line;">
                                         <!-- Simple markdown rendering with variable interpolation -->
                                         <span th:utext="${#strings.replace(
                                             #strings.replace(
@@ -87,102 +93,101 @@
                                         )}"></span>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Textfield -->
-                                <div th:if="${component.type == 'textfield' and component.key != null}" class="form-group">
+                                <div th:if="${component.type == 'textfield' and component.key != null}"
+                                    class="form-group">
                                     <label th:for="${component.key}" th:text="${component.label}">Campo</label>
-                                    <input type="text" 
-                                           th:id="${component.key}" 
-                                           th:name="${component.key}"
-                                           th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
-                                           th:disabled="${component.containsKey('disabled') and component.disabled}"
-                                           th:attr="minlength=${component.containsKey('validate') and component.validate.containsKey('minLength') ? component.validate.minLength : null},maxlength=${component.containsKey('validate') and component.validate.containsKey('maxLength') ? component.validate.maxLength : null}"
-                                           class="form-control">
-                                    <small th:if="${component.containsKey('description')}" th:text="${component.description}" style="color: #666;"></small>
+                                    <input type="text" th:id="${component.key}" th:name="${component.key}"
+                                        th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
+                                        th:disabled="${component.containsKey('disabled') and component.disabled}"
+                                        th:attr="minlength=${component.containsKey('validate') and component.validate.containsKey('minLength') ? component.validate.minLength : null},maxlength=${component.containsKey('validate') and component.validate.containsKey('maxLength') ? component.validate.maxLength : null}"
+                                        class="form-control">
+                                    <small th:if="${component.containsKey('description')}"
+                                        th:text="${component.description}" style="color: #666;"></small>
                                 </div>
-                                
+
                                 <!-- Textarea -->
-                                <div th:if="${component.type == 'textarea' and component.key != null}" class="form-group">
+                                <div th:if="${component.type == 'textarea' and component.key != null}"
+                                    class="form-group">
                                     <label th:for="${component.key}" th:text="${component.label}">Campo</label>
-                                    <textarea th:id="${component.key}" 
-                                              th:name="${component.key}"
-                                              th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
-                                              th:attr="maxlength=${component.containsKey('validate') and component.validate.containsKey('maxLength') ? component.validate.maxLength : null}"
-                                              rows="4" 
-                                              class="form-control"></textarea>
-                                    <small th:if="${component.containsKey('description')}" th:text="${component.description}" style="color: #666;"></small>
+                                    <textarea th:id="${component.key}" th:name="${component.key}"
+                                        th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
+                                        th:attr="maxlength=${component.containsKey('validate') and component.validate.containsKey('maxLength') ? component.validate.maxLength : null}"
+                                        rows="4" class="form-control"></textarea>
+                                    <small th:if="${component.containsKey('description')}"
+                                        th:text="${component.description}" style="color: #666;"></small>
                                 </div>
-                                
+
                                 <!-- Checkbox -->
-                                <div th:if="${component.type == 'checkbox' and component.key != null}" class="form-group">
+                                <div th:if="${component.type == 'checkbox' and component.key != null}"
+                                    class="form-group">
                                     <input type="hidden" th:name="${'_' + component.key}" value="false">
                                     <label>
-                                        <input type="checkbox" 
-                                               th:id="${component.key}" 
-                                               th:name="${component.key}"
-                                               value="true">
+                                        <input type="checkbox" th:id="${component.key}" th:name="${component.key}"
+                                            value="true">
                                         <span th:text="${component.label}">Campo</span>
                                     </label>
-                                    <small th:if="${component.containsKey('description')}" th:text="${component.description}" style="display: block; color: #666;"></small>
+                                    <small th:if="${component.containsKey('description')}"
+                                        th:text="${component.description}" style="display: block; color: #666;"></small>
                                 </div>
-                                
+
                                 <!-- Radio buttons -->
                                 <div th:if="${component.type == 'radio' and component.key != null}" class="form-group">
                                     <label th:text="${component.label}">Campo</label>
-                                    <div th:if="${component.containsKey('values')}" th:each="option : ${component.values}">
+                                    <div th:if="${component.containsKey('values')}"
+                                        th:each="option : ${component.values}">
                                         <label style="display: block; margin: 5px 0;">
-                                            <input type="radio" 
-                                                   th:name="${component.key}" 
-                                                   th:value="${option.value}"
-                                                   th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}">
+                                            <input type="radio" th:name="${component.key}" th:value="${option.value}"
+                                                th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}">
                                             <span th:text="${option.label}">Opción</span>
                                         </label>
                                     </div>
-                                    <small th:if="${component.containsKey('description')}" th:text="${component.description}" style="color: #666;"></small>
+                                    <small th:if="${component.containsKey('description')}"
+                                        th:text="${component.description}" style="color: #666;"></small>
                                 </div>
-                                
+
                                 <!-- Select dropdown -->
                                 <div th:if="${component.type == 'select' and component.key != null}" class="form-group">
                                     <label th:for="${component.key}" th:text="${component.label}">Campo</label>
-                                    <select th:id="${component.key}" 
-                                            th:name="${component.key}"
-                                            th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
-                                            class="form-control">
+                                    <select th:id="${component.key}" th:name="${component.key}"
+                                        th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
+                                        class="form-control">
                                         <option value="">Seleccione una opción</option>
-                                        <option th:if="${component.containsKey('values')}" th:each="option : ${component.values}" 
-                                                th:value="${option.value}" 
-                                                th:text="${option.label}">Opción</option>
+                                        <option th:if="${component.containsKey('values')}"
+                                            th:each="option : ${component.values}" th:value="${option.value}"
+                                            th:text="${option.label}">Opción</option>
                                     </select>
-                                    <small th:if="${component.containsKey('description')}" th:text="${component.description}" style="color: #666;"></small>
+                                    <small th:if="${component.containsKey('description')}"
+                                        th:text="${component.description}" style="color: #666;"></small>
                                 </div>
-                                
+
                                 <!-- Number -->
                                 <div th:if="${component.type == 'number' and component.key != null}" class="form-group">
                                     <label th:for="${component.key}" th:text="${component.label}">Campo</label>
-                                    <input type="number" 
-                                           th:id="${component.key}" 
-                                           th:name="${component.key}"
-                                           th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
-                                           th:disabled="${component.containsKey('disabled') and component.disabled}"
-                                           th:attr="min=${component.containsKey('validate') and component.validate.containsKey('min') ? component.validate.min : null},step=${component.containsKey('decimalDigits') ? (component.decimalDigits == 0 ? '1' : '0.01') : '0.01'}"
-                                           class="form-control">
-                                    <small th:if="${component.containsKey('description')}" th:text="${component.description}" style="color: #666;"></small>
+                                    <input type="number" th:id="${component.key}" th:name="${component.key}"
+                                        th:required="${component.containsKey('validate') and component.validate.containsKey('required') and component.validate.required}"
+                                        th:disabled="${component.containsKey('disabled') and component.disabled}"
+                                        th:attr="min=${component.containsKey('validate') and component.validate.containsKey('min') ? component.validate.min : null},step=${component.containsKey('decimalDigits') ? (component.decimalDigits == 0 ? '1' : '0.01') : '0.01'}"
+                                        class="form-control">
+                                    <small th:if="${component.containsKey('description')}"
+                                        th:text="${component.description}" style="color: #666;"></small>
                                 </div>
-                                
+
                                 <!-- Datetime -->
-                                <div th:if="${component.type == 'datetime' and component.key != null}" class="form-group">
+                                <div th:if="${component.type == 'datetime' and component.key != null}"
+                                    class="form-group">
                                     <label th:for="${component.key}" th:text="${component.label}">Campo</label>
-                                    <input type="datetime-local" 
-                                           th:id="${component.key}" 
-                                           th:name="${component.key}"
-                                           th:required="${component.validate != null and component.validate.required}"
-                                           class="form-control">
-                                    <small th:if="${component.description}" th:text="${component.description}" style="color: #666;"></small>
+                                    <input type="datetime-local" th:id="${component.key}" th:name="${component.key}"
+                                        th:required="${component.validate != null and component.validate.required}"
+                                        class="form-control">
+                                    <small th:if="${component.description}" th:text="${component.description}"
+                                        style="color: #666;"></small>
                                 </div>
                             </th:block>
                         </div>
 
-                        
+
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">Completar Tarea</button>
                             <a th:href="@{/tasks}" class="btn btn-secondary">Cancelar</a>
@@ -199,4 +204,5 @@
         </div>
     </footer>
 </body>
+
 </html>
