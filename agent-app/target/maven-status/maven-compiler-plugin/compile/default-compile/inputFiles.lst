@@ -1,5 +1,8 @@
+D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\controller\CompraGasController.java
 D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\service\CamundaService.java
+D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\dto\OrdenCompraDTO.java
 D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\config\helper.java
+D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\service\CompraGasService.java
 D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\controller\TaskController.java
 D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\controller\HomeController.java
 D:\Universidad\proyecto software\springboot-bpmn\agent-app\src\main\java\com\gascorocora\agent\config\CamundaClientConfig.java
