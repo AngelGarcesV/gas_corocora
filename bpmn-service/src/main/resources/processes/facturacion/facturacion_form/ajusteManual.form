@@ -1,0 +1,77 @@
+{
+  "components": [
+    {
+      "label": "Lectura Original",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1r4k2x9",
+        "columns": null
+      },
+      "id": "Field_1in1des",
+      "key": "lecturaOriginal"
+    },
+    {
+      "label": "Motivo del Error",
+      "values": [
+        {
+          "label": "Error de digitación",
+          "value": "Error de digitación"
+        },
+        {
+          "label": "Medidor defectuoso",
+          "value": "Medidor defectuoso"
+        },
+        {
+          "label": "Estimación",
+          "value": "Estimación"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1g1qqco",
+        "columns": null
+      },
+      "id": "Field_0w9gkqs",
+      "key": "motivoError"
+    },
+    {
+      "label": "Valor de Lectura Corregida/Ajustada",
+      "type": "number",
+      "layout": {
+        "row": "Row_01q1skm",
+        "columns": null
+      },
+      "id": "Field_07t4519",
+      "key": "valorLectura"
+    },
+    {
+      "label": "Comentarios de Justificación",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1cae0zu",
+        "columns": null
+      },
+      "id": "Field_03u73g4",
+      "key": "justificacion"
+    },
+    {
+      "label": "Confirmar Ajuste",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_0i4abdh",
+        "columns": null
+      },
+      "id": "Field_1ickawu"
+    }
+  ],
+  "type": "default",
+  "id": "ajusteManual",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}

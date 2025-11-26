@@ -1,0 +1,91 @@
+{
+  "components": [
+    {
+      "label": "Consumo Mensual Calculado (m³)",
+      "type": "number",
+      "layout": {
+        "row": "Row_0z1i5p6",
+        "columns": null
+      },
+      "id": "Field_1dmoetk",
+      "key": "lecturaActual",
+      "disabled": true
+    },
+    {
+      "label": "Estrato del Cliente",
+      "type": "number",
+      "layout": {
+        "row": "Row_1bt3y9a",
+        "columns": null
+      },
+      "id": "Field_0vscy6f",
+      "key": "estrato",
+      "disabled": true
+    },
+    {
+      "label": "Subtotal (Sin Subsidio/Contribución)",
+      "type": "number",
+      "layout": {
+        "row": "Row_0aqaj4z",
+        "columns": null
+      },
+      "id": "Field_1s0phdo",
+      "key": "subtotal",
+      "disabled": true
+    },
+    {
+      "label": "Subsidio Aplicado (%)",
+      "type": "number",
+      "layout": {
+        "row": "Row_1elv1w3",
+        "columns": null
+      },
+      "id": "Field_0es7983",
+      "key": "porcentajeSubsidio",
+      "disabled": true
+    },
+    {
+      "label": "Valor Contribución/Recargo",
+      "type": "number",
+      "layout": {
+        "row": "Row_1mdaefi",
+        "columns": null
+      },
+      "id": "Field_0w2vyck",
+      "key": "valorContribucion",
+      "disabled": true,
+      "description": "Monto aplicado a estratos 5 y 6 (si aplica)."
+    },
+    {
+      "label": "MONTO TOTAL A PAGAR",
+      "type": "number",
+      "layout": {
+        "row": "Row_0u9x1yx",
+        "columns": null
+      },
+      "id": "Field_0ixs79s",
+      "key": "montoTotal",
+      "disabled": true
+    },
+    {
+      "label": "Comentarios",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_03mk0td",
+        "columns": null
+      },
+      "id": "Field_1y6onr7",
+      "key": "comentariosAgente",
+      "properties": {}
+    }
+  ],
+  "type": "default",
+  "id": "factura",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 19
+}
