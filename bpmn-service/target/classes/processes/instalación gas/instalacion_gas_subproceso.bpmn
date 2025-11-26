@@ -423,7 +423,7 @@ execution.removeVariable("fecha_limite_correccion");</bpmn:script>
             </camunda:inputParameter>
             <camunda:inputParameter name="payload">
               <camunda:script scriptFormat="JavaScript">var cliente = {
-  "cedula": execution.getVariable("cedula_cliente"),
+  "cedula": execution.getVariable("cedulaCliente"),
   "nombre": execution.getVariable("nombre"),
   "direccion": execution.getVariable("direccion"),
   "ciudad": execution.getVariable("ciudad"),

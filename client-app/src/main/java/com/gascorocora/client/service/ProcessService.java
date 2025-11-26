@@ -121,4 +121,82 @@ public class ProcessService {
 
         return processInstance;
     }
+    
+        private static final String FACTURACION_PROCESS_KEY = "proceso_facturacion_cobro";
+
+        /**
+         * Inicia una solicitud de facturación desde Client App.
+         */
+        public Map<String, Object> startBillingProcess(String cuentaServicio, String lecturaActual, String lecturaAnterior) {
+
+            String businessKey = "FAC-" + System.currentTimeMillis();
+
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("cuentaServicio", wrap("String", cuentaServicio));
+            variables.put("lecturaActual", wrap("Double", Double.parseDouble(lecturaActual)));
+            variables.put("lecturaAnterior", wrap("Double", Double.parseDouble(lecturaAnterior)));
+
+            Map<String, Object> body = new HashMap<>();
+            body.put("businessKey", businessKey);
+            body.put("variables", variables);
+
+            return camundaWebClient.post()
+                    .uri("/process-definition/key/" + FACTURACION_PROCESS_KEY + "/start")
+                    .bodyValue(body)
+                    .retrieve()
+                    .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+                    .block();
+        }
+
+        /**
+         * Completa cualquier tarea del proceso de facturación con variables.
+         */
+        public void completeBillingTask(String taskId, Map<String, Object> vars) {
+            Map<String, Object> wrapped = new HashMap<>();
+
+            vars.forEach((k, v) -> wrapped.put(k, autoWrap(v)));
+
+            camundaWebClient.post()
+                    .uri("/task/" + taskId + "/complete")
+                    .bodyValue(Map.of("variables", wrapped))
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+        }
+
+        /**
+         * Obtiene todas las tareas activas del proceso de facturación.
+         */
+        public List<Map<String, Object>> getBillingTasks(String processInstanceId) {
+            return camundaWebClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/task")
+                            .queryParam("processInstanceId", processInstanceId)
+                            .build())
+                    .retrieve()
+                    .bodyToFlux(new ParameterizedTypeReference<Map<String, Object>>() {})
+                    .collectList()
+                    .block();
+        }
+
+
+        /* ==========================================================
+           =  HELPERS COMPATIBLES CON LA IMPLEMENTACIÓN ORIGINAL
+           ========================================================== */
+
+        private Map<String, Object> wrap(String type, Object value) {
+            return Map.of(
+                    "value", value,
+                    "type", type
+            );
+        }
+
+        private Map<String, Object> autoWrap(Object value) {
+            if (value instanceof Integer) return wrap("Integer", value);
+            if (value instanceof Double) return wrap("Double", value);
+            if (value instanceof Boolean) return wrap("Boolean", value);
+            return wrap("String", value.toString());
+        }
+
 }
+

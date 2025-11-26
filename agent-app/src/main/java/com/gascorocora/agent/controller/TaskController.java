@@ -71,10 +71,10 @@ public class TaskController {
                     taskName.contains("Solicitar corrección")
                 );
             case "facturacion":
-                // Tareas del Área de Facturación
                 return taskName != null && (
-                    taskName.contains("facturación") ||
-                    taskName.contains("Registrar en sistema")
+                    taskName.contains("LecturaMedidor") ||
+                    taskName.contains("Realizar corrección") ||
+                    taskName.contains("Generar archivo de factura")
                 );
             default:
                 return true;
