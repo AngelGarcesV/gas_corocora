@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Trámite - Gas Corocora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/new-request}">Solicitud Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/new}">Solicitud Compra</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}" class="active">Consultar Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/track}">Consultar Compra</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Consultar Estado de Trámite</h2>
+
+            <div class="form-container">
+                <form th:action="@{/track}" method="post">
+                    <div class="form-group">
+                        <label for="businessKey">Número de Radicado:</label>
+                        <input type="text" id="businessKey" name="businessKey" class="form-control"
+                            placeholder="Ej: SOL-1234567890" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Consultar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${found == false}" class="alert alert-error">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div th:if="${found}" class="result-container">
+                <div class="alert alert-success">
+                    <h3>Estado de su Solicitud</h3>
+                </div>
+
+                <div class="process-info">
+                    <h3>Información General</h3>
+                    <p><strong>Número de Radicado:</strong> <span th:text="${processInstance.businessKey}">-</span></p>
+                    <p><strong>ID del Proceso:</strong> <span th:text="${processInstance.id}">-</span></p>
+                    <p><strong>Estado:</strong>
+                        <span th:if="${processInstance.ended}" class="badge badge-success">Finalizado</span>
+                        <span th:unless="${processInstance.ended}" class="badge badge-info">En Proceso</span>
+                    </p>
+                </div>
+
+                <div class="timeline">
+                    <h3>Historial del Trámite</h3>
+                    <div class="timeline-container">
+                        <div th:each="activity : ${history}" class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h4 th:text="${activity.activityName}">Actividad</h4>
+                                <p><strong>Tipo:</strong> <span th:text="${activity.activityType}">-</span></p>
+                                <p><strong>Inicio:</strong> <span th:text="${activity.startTime}">-</span></p>
+                                <p th:if="${activity.endTime}"><strong>Fin:</strong> <span
+                                        th:text="${activity.endTime}">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

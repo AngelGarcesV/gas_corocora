@@ -1,0 +1,153 @@
+{
+  "components": [
+    {
+      "label": "Resultado de Inspección",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# 📋 Resultado de Inspección\n\nDocumente el resultado de la inspección de red interna realizada."
+    },
+    {
+      "type": "text",
+      "layout": {
+        "row": "Row_0b",
+        "columns": null
+      },
+      "id": "Field_Cliente_Info",
+      "properties": {},
+      "text": "**Cliente:** {{nombre}} {{apellido}}\n\n**Dirección:** {{direccion}}"
+    },
+    {
+      "label": "Fecha de Inspección Realizada",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1",
+        "columns": 8
+      },
+      "id": "Field_fecha_inspeccion_realizada",
+      "key": "fecha_inspeccion_realizada",
+      "validate": {
+        "required": true
+      },
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset",
+      "description": "Fecha y hora en que se realizó la inspección"
+    },
+    {
+      "label": "Inspector Asignado",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1",
+        "columns": 8
+      },
+      "id": "Field_inspector",
+      "key": "inspector",
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "description": "Nombre del inspector técnico"
+    },
+    {
+      "label": "¿Red interna aprobada?",
+      "type": "radio",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_red_aprobada",
+      "key": "red_aprobada",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Sí, cumple con normativa",
+          "value": "true"
+        },
+        {
+          "label": "No, requiere correcciones",
+          "value": "false"
+        }
+      ],
+      "description": "Indique si la red interna cumple con las normas técnicas"
+    },
+    {
+      "label": "Hallazgos de la Inspección",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_3",
+        "columns": null
+      },
+      "id": "Field_hallazgos",
+      "key": "hallazgos",
+      "validate": {
+        "required": true,
+        "minLength": 10,
+        "maxLength": 1000
+      },
+      "description": "Describa los hallazgos encontrados durante la inspección"
+    },
+    {
+      "label": "Observaciones Técnicas",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_4",
+        "columns": null
+      },
+      "id": "Field_observaciones_tecnicas",
+      "key": "observaciones_tecnicas",
+      "validate": {
+        "required": false,
+        "maxLength": 1000
+      },
+      "description": "Observaciones técnicas adicionales"
+    },
+    {
+      "label": "Fotografías/Evidencias (URLs)",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_5",
+        "columns": null
+      },
+      "id": "Field_evidencias_url",
+      "key": "evidencias_url",
+      "validate": {
+        "required": false,
+        "maxLength": 1000
+      },
+      "description": "URLs de fotografías o evidencias, separadas por línea"
+    },
+    {
+      "label": "Normas Aplicadas",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_6",
+        "columns": null
+      },
+      "id": "Field_normas_aplicadas",
+      "key": "normas_aplicadas",
+      "validate": {
+        "required": false,
+        "maxLength": 200
+      },
+      "defaultValue": "NTC 2505, Resolución CREG 067/1995",
+      "description": "Normas técnicas aplicadas en la inspección"
+    }
+  ],
+  "type": "default",
+  "id": "resultado-inspeccion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

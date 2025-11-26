@@ -1,0 +1,67 @@
+{
+  "components": [
+    {
+      "label": "Agendar Cita de Inspección",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# 📅 Agendar Cita de Inspección\n\nPrograme la cita para inspeccionar la red interna del cliente."
+    },
+    {
+      "type": "text",
+      "layout": {
+        "row": "Row_0b",
+        "columns": null
+      },
+      "id": "Field_Cliente_Info",
+      "properties": {},
+      "text": "**Cliente:** {{nombre}} {{apellido}}\n\n**Dirección:** {{direccion}}\n\n**Teléfono:** {{telefono}}"
+    },
+    {
+      "label": "Fecha de Inspección",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_fecha_inspeccion",
+      "key": "fecha_inspeccion",
+      "validate": {
+        "required": true
+      },
+      "description": "Seleccione la fecha y hora para la inspección de la red interna",
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_normalized",
+      "timeInterval": 15
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_observaciones_inspeccion",
+      "key": "observaciones_inspeccion",
+      "validate": {
+        "required": false,
+        "maxLength": 500
+      },
+      "description": "Observaciones adicionales para la cita de inspección"
+    }
+  ],
+  "type": "default",
+  "id": "agendar-cita-inspeccion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

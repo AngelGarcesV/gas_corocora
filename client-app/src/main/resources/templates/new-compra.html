@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Solicitud de Compra - Gas Corocora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/new-request}">Solicitud Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/new}" class="active">Solicitud Compra</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}">Consultar Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/track}">Consultar Compra</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Solicitud de Compra de Gas Natural</h2>
+
+            <div th:if="${success}" class="alert alert-success">
+                <h3>✓ Solicitud Radicada Exitosamente</h3>
+                <p th:text="${message}"></p>
+                <p><strong>Por favor anote su número de orden para futuras consultas.</strong></p>
+                <a th:href="@{/compra-gas/track}" class="btn btn-primary">Consultar Estado</a>
+            </div>
+
+            <div th:if="${error}" class="alert alert-error">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div class="form-container" th:unless="${success}">
+                <form th:action="@{/compra-gas/new}" method="post">
+                    <div class="form-section">
+                        <h3>Información de la Compra</h3>
+
+                        <div class="form-group">
+                            <label for="cantidadGas">Cantidad de Gas Natural (m³): *</label>
+                            <input type="number" id="cantidadGas" name="cantidadGas" class="form-control" min="1"
+                                step="1" required>
+                            <small>Ingrese la cantidad de gas natural requerida en metros cúbicos (m³)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaRequerida">Fecha Requerida de Entrega: *</label>
+                            <input type="date" id="fechaRequerida" name="fechaRequerida" class="form-control" required>
+                            <small>Seleccione la fecha en que necesita recibir el gas</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="proveedorPreferido">Proveedor Preferido (opcional):</label>
+                            <input type="text" id="proveedorPreferido" name="proveedorPreferido" class="form-control"
+                                placeholder="Ej: Proveedor XYZ">
+                            <small>Si tiene un proveedor de preferencia, indíquelo aquí</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Datos del Solicitante</h3>
+
+                        <div class="form-group">
+                            <label for="usuarioSolicitante">Nombre Completo del Solicitante: *</label>
+                            <input type="text" id="usuarioSolicitante" name="usuarioSolicitante" class="form-control"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="justificacion">Justificación de la Compra: *</label>
+                            <textarea id="justificacion" name="justificacion" class="form-control" rows="4" required
+                                placeholder="Describa brevemente el motivo de esta compra de gas natural"></textarea>
+                            <small>Explique por qué se requiere esta compra (ej: abastecimiento mensual, aumento de
+                                demanda, etc.)</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Radicar Solicitud de Compra</button>
+                        <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+
+                    <p class="form-note">* Campos obligatorios</p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

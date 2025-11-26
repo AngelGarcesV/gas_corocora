@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Compra - Gas Corocora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/new-request}">Solicitud Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/new}">Solicitud Compra</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/track}">Consultar Instalación</a></li>
+                    <li><a th:href="@{/compra-gas/track}" class="active">Consultar Compra</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Consultar Estado de Compra de Gas</h2>
+
+            <div class="form-container">
+                <form th:action="@{/compra-gas/track}" method="post">
+                    <div class="form-group">
+                        <label for="businessKey">Número de Orden de Compra:</label>
+                        <input type="text" id="businessKey" name="businessKey" class="form-control"
+                            placeholder="Ej: COMPRA-1234567890" required>
+                        <small>Ingrese el número de orden que recibió al radicar su solicitud</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Consultar</button>
+                        <a th:href="@{/}" class="btn btn-secondary">Volver al Inicio</a>
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${error}" class="alert alert-error">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div th:if="${found}" class="process-info">
+                <h3>Información de la Orden de Compra</h3>
+
+                <div class="info-card">
+                    <div class="info-row">
+                        <span class="info-label">Número de Orden:</span>
+                        <span class="info-value" th:text="${processInstance.businessKey}"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">ID del Proceso:</span>
+                        <span class="info-value" th:text="${processInstance.id}"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Estado:</span>
+                        <span class="info-value">
+                            <span th:if="${processInstance.ended}" class="badge badge-success">Completado</span>
+                            <span th:unless="${processInstance.ended}" class="badge badge-info">En Proceso</span>
+                        </span>
+                    </div>
+                    <div class="info-row" th:if="${processInstance.suspended}">
+                        <span class="info-label">Suspendido:</span>
+                        <span class="info-value">
+                            <span class="badge badge-warning">Sí</span>
+                        </span>
+                    </div>
+                </div>
+
+                <h3>Historial de Actividades</h3>
+                <div class="timeline">
+                    <div th:each="activity : ${history}" class="timeline-item">
+                        <div class="timeline-marker"
+                            th:classappend="${activity.endTime != null} ? 'completed' : 'active'">
+                        </div>
+                        <div class="timeline-content">
+                            <h4 th:text="${activity.activityName}">Actividad</h4>
+                            <p class="timeline-date">
+                                <strong>Inicio:</strong>
+                                <span th:text="${activity.startTime}"></span>
+                            </p>
+                            <p class="timeline-date" th:if="${activity.endTime != null}">
+                                <strong>Fin:</strong>
+                                <span th:text="${activity.endTime}"></span>
+                            </p>
+                            <p class="timeline-type">
+                                <span class="badge" th:text="${activity.activityType}"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

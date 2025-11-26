@@ -1,0 +1,162 @@
+{
+  "components": [
+    {
+      "text": "# Generar Solicitud de Aprobación\nComplete la información de la compra de gas para enviar a aprobación.",
+      "id": "Text_Encabezado",
+      "type": "text",
+      "layout": {
+        "row": "Row_0"
+      }
+    },
+    {
+      "label": "Usuario solicitante",
+      "type": "textfield",
+      "id": "Text_UsuarioSolicitante",
+      "key": "usuario_solicitante",
+      "description": "Usuario que realiza la solicitud",
+      "validate": {
+        "required": false
+      },
+      "disabled": true,
+      "layout": {
+        "row": "Row_User0"
+      }
+    },
+    {
+      "label": "Proveedor seleccionado",
+      "type": "select",
+      "id": "Select_Proveedor",
+      "key": "proveedor_seleccionado",
+      "description": "Seleccione el proveedor con el que desea realizar la compra",
+      "values": [
+        {
+          "label": "GasTotal",
+          "value": "GasTotal"
+        },
+        {
+          "label": "GasCity",
+          "value": "GasCity"
+        },
+        {
+          "label": "Distribuidora X",
+          "value": "Distribuidora X"
+        },
+        {
+          "label": "GasExpress",
+          "value": "GasExpress"
+        },
+        {
+          "label": "AltaPresión",
+          "value": "AltaPresión"
+        }
+      ],
+      "searchable": true,
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_1"
+      }
+    },
+    {
+      "label": "Cantidad de gas (m³)",
+      "type": "number",
+      "id": "Number_Cantidad",
+      "key": "cantidad_gas",
+      "description": "Ingrese la cantidad de gas en metros cúbicos",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 10000
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    },
+    {
+      "label": "Costo unitario ($/m³)",
+      "type": "number",
+      "id": "Number_CostoUnitario",
+      "key": "costo_unitario",
+      "description": "Precio por metro cúbico",
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "layout": {
+        "row": "Row_2a"
+      }
+    },
+    {
+      "label": "Tiempo de entrega (días)",
+      "type": "number",
+      "id": "Number_TiempoEntrega",
+      "key": "tiempo_entrega_dias",
+      "description": "Tiempo estimado de entrega en días",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 365
+      },
+      "layout": {
+        "row": "Row_4"
+      }
+    },
+    {
+      "label": "Fecha de vencimiento del contrato",
+      "type": "datetime",
+      "id": "DateTime_FechaVencimiento",
+      "key": "fecha_vencimiento_contrato",
+      "description": "Seleccione la fecha de vencimiento del contrato",
+      "format": "yyyy-MM-dd HH:mm",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_4a"
+      }
+    },
+    {
+      "label": "Justificación de la solicitud",
+      "id": "TextArea_Justificacion",
+      "type": "textfield",
+      "key": "justificacion_solicitud",
+      "description": "Explique los motivos de esta solicitud de compra (mínimo 20 caracteres)",
+      "validate": {
+        "required": true,
+        "minLength": 20
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_5"
+      }
+    },
+    {
+      "label": "Observaciones adicionales",
+      "id": "TextArea_Observaciones",
+      "type": "textfield",
+      "key": "observaciones_solicitud",
+      "description": "Información adicional relevante (opcional)",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_6"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_SolicitudAprobacion",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}

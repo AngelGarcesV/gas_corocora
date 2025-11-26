@@ -1,0 +1,163 @@
+{
+  "components": [
+    {
+      "label": "Registro de Pago de Instalación",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {},
+      "text": "# Registro de Pago de Instalación\n\nRegistre el pago recibido del cliente para la instalación del servicio de gas."
+    },
+    {
+      "type": "text",
+      "layout": {
+        "row": "Row_0b",
+        "columns": null
+      },
+      "id": "Field_Cliente_Info",
+      "properties": {},
+      "text": "**Cliente:** {{nombre}} {{apellido}}\n\n**Dirección:** {{direccion}}\n\n**Estrato:** {{estrato}}"
+    },
+    {
+      "type": "text",
+      "layout": {
+        "row": "Row_0c",
+        "columns": null
+      },
+      "id": "Field_Monto_Info",
+      "properties": {},
+      "text": "# Valor a Pagar\n\n**Monto según cotización aprobada:** ${{conexion_a_pagar}}"
+    },
+    {
+      "label": "Monto Recibido",
+      "type": "number",
+      "layout": {
+        "row": "Row_1",
+        "columns": 8
+      },
+      "id": "Field_monto_recibido",
+      "key": "monto_recibido",
+      "decimalDigits": 2,
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "description": "Monto efectivamente recibido"
+    },
+    {
+      "label": "Método de Pago",
+      "type": "select",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_metodo_pago",
+      "key": "metodo_pago",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Efectivo",
+          "value": "efectivo"
+        },
+        {
+          "label": "Transferencia Bancaria",
+          "value": "transferencia"
+        },
+        {
+          "label": "Tarjeta de Crédito",
+          "value": "tarjeta_credito"
+        },
+        {
+          "label": "Tarjeta de Débito",
+          "value": "tarjeta_debito"
+        },
+        {
+          "label": "PSE",
+          "value": "pse"
+        },
+        {
+          "label": "Cheque",
+          "value": "cheque"
+        }
+      ],
+      "description": "Seleccione el método utilizado para el pago"
+    },
+    {
+      "label": "Número de Transacción / Recibo",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_3",
+        "columns": null
+      },
+      "id": "Field_numero_transaccion",
+      "key": "numero_transaccion",
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "description": "Número de referencia o recibo del pago"
+    },
+    {
+      "label": "Fecha de Pago",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_4",
+        "columns": null
+      },
+      "id": "Field_fecha_pago",
+      "key": "fecha_pago",
+      "validate": {
+        "required": true
+      },
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "timeSerializingFormat": "utc_offset",
+      "description": "Fecha y hora en que se recibió el pago"
+    },
+    {
+      "label": "Comprobante de Pago",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_5",
+        "columns": null
+      },
+      "id": "Field_comprobante_url",
+      "key": "comprobante_url",
+      "validate": {
+        "required": false,
+        "maxLength": 500
+      },
+      "description": "URL o referencia del comprobante de pago escaneado"
+    },
+    {
+      "label": "Observaciones",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_6",
+        "columns": null
+      },
+      "id": "Field_observaciones_pago",
+      "key": "observaciones_pago",
+      "validate": {
+        "required": false,
+        "maxLength": 500
+      },
+      "description": "Observaciones adicionales sobre el pago"
+    }
+  ],
+  "type": "default",
+  "id": "registro-pago",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 16
+}

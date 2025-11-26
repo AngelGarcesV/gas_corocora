@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Proceso - Gas Corocora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>Gas Corocora - Portal Interno</h1>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/tasks}">Mis Tareas</a></li>
+                    <li><a th:href="@{/processes}" class="active">Procesos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Iniciar Proceso</h2>
+
+            <form th:action="@{/processes/{key}/start(key=${processKey})}" method="post">
+                <div class="form-group">
+                    <label for="businessKey">Clave de Negocio:</label>
+                    <input type="text" id="businessKey" name="businessKey" class="form-control" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Iniciar Proceso</button>
+                    <a th:href="@{/processes}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gas Corocora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "components": [
+    {
+      "text": "# Verificación de Cobertura\n\nIndique si la zona cuenta con cobertura de red de gas.",
+      "label": "Verificación de Cobertura",
+      "type": "text",
+      "layout": {
+        "row": "Row_0",
+        "columns": null
+      },
+      "id": "Field_Title",
+      "properties": {}
+    },
+    {
+      "text": "**Nombre:** {{nombre}} {{apellido}}\n\n**Dirección:** {{direccion}}\n\n**Ciudad:** {{ciudad}}\n\n**Estrato:** {{estrato}}",
+      "label": "Datos de la Solicitud",
+      "type": "text",
+      "layout": {
+        "row": "Row_1",
+        "columns": null
+      },
+      "id": "Field_Info",
+      "properties": {}
+    },
+    {
+      "label": "¿La zona cuenta con red de gas?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_2",
+        "columns": null
+      },
+      "id": "Field_cobertura",
+      "key": "cobertura",
+      "validate": {
+        "required": false
+      },
+      "description": "Marque esta casilla si la zona cuenta con cobertura de red de gas"
+    }
+  ],
+  "type": "default",
+  "id": "verificar-cobertura",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.39.0"
+  },
+  "schemaVersion": 19
+}
