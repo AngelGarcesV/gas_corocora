@@ -2,13 +2,13 @@
 
 Sistema de gestión de solicitudes de instalación de gas natural con Camunda BPM embebido y notificaciones por correo electrónico.
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 - **Java 21** (JDK 21 o superior)
 - **Maven 3.6+**
 - **Conexión a Internet** (para envío de correos vía Gmail)
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### 1. Configurar Credenciales de Gmail
 
@@ -20,7 +20,7 @@ spring.mail.username=TU_CORREO@gmail.com
 spring.mail.password=TU_CONTRASEÑA_DE_APLICACION
 ```
 
-> **⚠️ Importante**: Debes generar una "Contraseña de aplicación" en tu cuenta de Google:
+> ** Importante**: Debes generar una "Contraseña de aplicación" en tu cuenta de Google:
 > 1. Ve a https://myaccount.google.com/security
 > 2. Activa la verificación en 2 pasos
 > 3. En "Contraseñas de aplicaciones", genera una nueva para "Correo"
@@ -50,7 +50,7 @@ La aplicación estará disponible en:
 - Contraseña: `demo`
 
 
-## 🗄️ Base de Datos
+## Base de Datos
 
 La aplicación usa **H2 in-memory** para desarrollo. Los datos se almacenan en:
 
@@ -67,7 +67,7 @@ La aplicación usa **H2 in-memory** para desarrollo. Los datos se almacenan en:
    - **Password**: *(dejar en blanco)*
 3. Hacer clic en **"Connect"**
 
-## ❓ Solución de Problemas
+## Solución de Problemas
 
 ### El proceso no aparece en Camunda
 
@@ -95,7 +95,7 @@ java -version
 
 Debe mostrar: `openjdk version "21.x.x"`
 
-## 📚 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Spring Boot 2.7.18**
 - **Camunda BPM 7.18.0**
@@ -106,10 +106,10 @@ Debe mostrar: `openjdk version "21.x.x"`
 - **Thymeleaf**
 - **Maven**
 
-## 👨‍💻 Autor
+## Autor
 
 Sistema desarrollado para Gas Corocora
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto es de uso académico para la Universidad.
