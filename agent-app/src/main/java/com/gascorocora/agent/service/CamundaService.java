@@ -43,14 +43,12 @@ public class CamundaService {
 
     public Map<String, Object> getTaskForm(String taskId) {
         try {
-            // Get the form key from task
             Map<String, Object> formInfo = camundaWebClient.get()
                     .uri("/task/" + taskId + "/form")
                     .retrieve()
                     .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                     .block();
             
-            // If there's a formKey, try to get the deployed form
             if (formInfo != null && formInfo.containsKey("key")) {
                 String formKey = (String) formInfo.get("key");
                 try {
@@ -60,7 +58,6 @@ public class CamundaService {
                             .bodyToMono(String.class)
                             .block();
                     
-                    // Parse the JSON form
                     if (deployedForm != null) {
                         return new com.fasterxml.jackson.databind.ObjectMapper()
                                 .readValue(deployedForm, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
@@ -147,7 +144,6 @@ public class CamundaService {
     }
 
     public Map<String, Object> startProcess(String processKey, Map<String, Object> variables) {
-        // For startProcess, use empty fieldTypes map (will auto-detect types)
         Map<String, Object> body = Map.of("variables", convertToVariableMap(variables, new java.util.HashMap<>()));
         
         return camundaWebClient.post()
@@ -169,14 +165,12 @@ public class CamundaService {
                             String fieldType = fieldTypes.getOrDefault(key, "textfield");
                             String type = "String";
                             
-                            // Determine the type based on the field type from Camunda form
                             if ("checkbox".equals(fieldType)) {
                                 type = "Boolean";
                                 if (!(value instanceof Boolean)) {
                                     value = Boolean.parseBoolean(value.toString());
                                 }
                             } else if ("number".equals(fieldType)) {
-                                // Number field - check if decimal or integer
                                 if (value.toString().contains(".")) {
                                     try {
                                         value = Double.parseDouble(value.toString());
@@ -193,15 +187,11 @@ public class CamundaService {
                                     }
                                 }
                             } else if ("datetime".equals(fieldType)) {
-                                // DateTime format from HTML5 datetime-local
-                                // Camunda REST API expects ISO 8601 string WITHOUT specifying type as Date
-                                // It will auto-detect it as Date from the format
                                 try {
                                     String dateStr = value.toString();
                                     if (!dateStr.endsWith("Z") && !dateStr.contains("+")) {
                                         dateStr = dateStr + ":00Z";
                                     }
-                                    // Keep as String, Camunda will parse it
                                     value = dateStr;
                                     type = "String";
                                 } catch (Exception e) {
@@ -214,7 +204,6 @@ public class CamundaService {
                             } else if (value instanceof Double || value instanceof Float) {
                                 type = "Double";
                             }
-                            // All textfield, textarea, select, etc. remain as String
                             
                             return Map.of(
                                 "value", value,

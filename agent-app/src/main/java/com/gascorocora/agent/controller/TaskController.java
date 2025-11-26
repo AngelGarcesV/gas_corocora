@@ -21,7 +21,6 @@ public class TaskController {
     public String listTasks(@RequestParam(required = false) String role, Model model) {
         var tasks = camundaService.getAssignedTasks();
         
-        // Siempre filtrar tareas del cliente (no deben aparecer en agent-app)
         tasks = tasks.stream()
                 .filter(task -> {
                     String taskName = (String) task.get("name");
@@ -29,7 +28,6 @@ public class TaskController {
                 })
                 .collect(java.util.stream.Collectors.toList());
         
-        // Filter tasks by role if specified
         if (role != null && !role.isEmpty()) {
             tasks = tasks.stream()
                     .filter(task -> {
@@ -45,21 +43,18 @@ public class TaskController {
     }
     
     private boolean isTaskForRole(String taskName, String role) {
-        // Primero excluir tareas del cliente que no deben aparecer en agent-app
         if (isClientTask(taskName)) {
             return false;
         }
         
         switch (role) {
             case "comercial":
-                // Tareas del Área Comercial: Recibir pago, Procesar cotización
                 return taskName != null && (
                     taskName.contains("pago de instalación") ||
                     taskName.contains("Recibir pago") ||
                     taskName.contains("Procesar cotización")
                 );
             case "tecnico":
-                // Tareas del Área Técnica: Verificar cobertura, inspecciones, instalaciones, correcciones
                 return taskName != null && (
                     taskName.contains("Verificar cobertura") ||
                     taskName.contains("inspección") ||
@@ -71,7 +66,6 @@ public class TaskController {
                     taskName.contains("Solicitar corrección")
                 );
             case "facturacion":
-                // Tareas del Área de Facturación
                 return taskName != null && (
                     taskName.contains("facturación") ||
                     taskName.contains("Registrar en sistema")
@@ -82,7 +76,6 @@ public class TaskController {
     }
     
     private boolean isClientTask(String taskName) {
-        // Tareas que corresponden al lane del Cliente según el BPMN
         return taskName != null && (
             taskName.contains("Radicar solicitud") ||
             taskName.contains("respuesta de cotización") ||
@@ -109,11 +102,9 @@ public class TaskController {
         log.info("Task ID: {}", taskId);
         log.info("Received variables: {}", variables);
         
-        // Remove all Spring's checkbox helper parameters (those starting with _)
         variables.keySet().removeIf(key -> key.startsWith("_"));
         log.info("After removing _ params: {}", variables);
         
-        // Get valid form field keys and their types
         Map<String, Object> form = camundaService.getTaskForm(taskId);
         log.info("Form retrieved: {}", form);
         Map<String, String> fieldTypes = new java.util.HashMap<>();
@@ -124,13 +115,11 @@ public class TaskController {
                 (java.util.List<Map<String, Object>>) form.get("components");
             
             for (Map<String, Object> component : components) {
-                // Only include components that have a key (form fields)
                 if (component.containsKey("key")) {
                     String key = (String) component.get("key");
                     String type = (String) component.get("type");
                     fieldTypes.put(key, type);
                     
-                    // Handle checkboxes: if not present, set to false
                     if ("checkbox".equals(type) && !variables.containsKey(key)) {
                         variables.put(key, false);
                     }
@@ -140,7 +129,6 @@ public class TaskController {
         
         log.info("Valid form field types: {}", fieldTypes);
         
-        // Filter only valid form variables
         Map<String, Object> processVariables = new java.util.HashMap<>();
         for (String key : fieldTypes.keySet()) {
             if (variables.containsKey(key)) {
