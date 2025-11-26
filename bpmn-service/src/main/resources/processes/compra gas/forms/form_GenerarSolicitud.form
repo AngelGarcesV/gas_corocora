@@ -9,25 +9,48 @@
       }
     },
     {
+      "label": "Usuario solicitante",
+      "type": "textfield",
+      "id": "Text_UsuarioSolicitante",
+      "key": "usuario_solicitante",
+      "description": "Usuario que realiza la solicitud",
+      "validate": {
+        "required": false
+      },
+      "disabled": true,
+      "layout": {
+        "row": "Row_User0"
+      }
+    },
+    {
       "label": "Proveedor seleccionado",
-      "values": [
-        {
-          "label": "GasTotal - $1200 - 3 días - 12 meses",
-          "value": "GasTotal"
-        },
-        {
-          "label": "GasCity - $1150 - 5 días - 6 meses",
-          "value": "GasCity"
-        },
-        {
-          "label": "Distribuidora X - $1180 - 2 días - 18 meses",
-          "value": "Distribuidora X"
-        }
-      ],
       "type": "select",
       "id": "Select_Proveedor",
       "key": "proveedor_seleccionado",
       "description": "Seleccione el proveedor con el que desea realizar la compra",
+      "values": [
+        {
+          "label": "GasTotal",
+          "value": "GasTotal"
+        },
+        {
+          "label": "GasCity",
+          "value": "GasCity"
+        },
+        {
+          "label": "Distribuidora X",
+          "value": "Distribuidora X"
+        },
+        {
+          "label": "GasExpress",
+          "value": "GasExpress"
+        },
+        {
+          "label": "AltaPresión",
+          "value": "AltaPresión"
+        }
+      ],
+      "searchable": true,
       "validate": {
         "required": true
       },
@@ -43,24 +66,25 @@
       "description": "Ingrese la cantidad de gas en kilogramos",
       "validate": {
         "required": true,
-        "min": 1
+        "min": 1,
+        "max": 10000
       },
       "layout": {
         "row": "Row_2"
       }
     },
     {
-      "label": "Costo total estimado",
+      "label": "Costo unitario ($/kg)",
       "type": "number",
-      "id": "Number_CostoTotal",
-      "key": "costo_total",
-      "description": "Costo total estimado de la compra",
+      "id": "Number_CostoUnitario",
+      "key": "costo_unitario",
+      "description": "Precio por kilogramo",
       "validate": {
         "required": true,
         "min": 0
       },
       "layout": {
-        "row": "Row_3"
+        "row": "Row_2a"
       }
     },
     {
@@ -71,10 +95,25 @@
       "description": "Tiempo estimado de entrega en días",
       "validate": {
         "required": true,
-        "min": 1
+        "min": 1,
+        "max": 365
       },
       "layout": {
         "row": "Row_4"
+      }
+    },
+    {
+      "label": "Fecha de vencimiento del contrato",
+      "type": "datetime",
+      "id": "DateTime_FechaVencimiento",
+      "key": "fecha_vencimiento_contrato",
+      "description": "Seleccione la fecha de vencimiento del contrato",
+      "format": "yyyy-MM-dd HH:mm",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_4a"
       }
     },
     {
@@ -82,15 +121,32 @@
       "id": "TextArea_Justificacion",
       "type": "textfield",
       "key": "justificacion_solicitud",
-      "description": "Explique los motivos de esta solicitud de compra",
+      "description": "Explique los motivos de esta solicitud de compra (mínimo 20 caracteres)",
       "validate": {
-        "required": true
+        "required": true,
+        "minLength": 20
       },
       "properties": {
         "multiline": true
       },
       "layout": {
         "row": "Row_5"
+      }
+    },
+    {
+      "label": "Observaciones adicionales",
+      "id": "TextArea_Observaciones",
+      "type": "textfield",
+      "key": "observaciones_solicitud",
+      "description": "Información adicional relevante (opcional)",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_6"
       }
     }
   ],

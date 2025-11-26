@@ -1,75 +1,109 @@
+// bpmn-service/src/main/java/com/example/demo/delegate/RegistrarRecepcionPedidoDelegate.java
 package com.example.demo.delegate;
 
+import com.example.demo.service.OrdenCompraService;
+import com.example.demo.service.AuditoriaCompraService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Service Task: Registrar recepción de pedido
- * Primera tarea del subproceso "Recibir pedido"
+ * Se ejecuta cuando se recibe el pedido del proveedor
+ *
+ * Variables de entrada:
+ * - ordenId (String)
+ * - cantidad_recibida (Integer) - opcional
+ * - fecha_recepcion (String) - opcional
+ * - initiator (String): usuario de Camunda
+ *
+ * Variables de salida:
+ * - estado_orden (String): "PEDIDO_RECIBIDO"
+ * - fecha_registro_recepcion (String)
+ * - pedido_registrado (Boolean)
  */
 @Component("registrarRecepcionPedidoDelegate")
 public class RegistrarRecepcionPedidoDelegate implements JavaDelegate {
 
+    private static final Logger logger = LoggerFactory.getLogger(RegistrarRecepcionPedidoDelegate.class);
+
+    @Autowired
+    private OrdenCompraService ordenCompraService;
+
+    @Autowired
+    private AuditoriaCompraService auditoriaCompraService;
+
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        // Capturar momento exacto de recepción
-        LocalDateTime fechaRecepcion = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        logger.info("=== Iniciando registro de recepción de pedido ===");
 
-        // Obtener información del pedido
-        String numeroOrden = (String) execution.getVariable("numero_orden");
-        String proveedor = (String) execution.getVariable("proveedor_seleccionado");
-        Integer cantidadGas = (Integer) execution.getVariable("cantidad_gas");
-        Number costoTotal = (Number) execution.getVariable("costo_total");
-
-        // Calcular días transcurridos desde el envío
-        Long diasDesdeEnvio = null;
-        String fechaEnvioStr = (String) execution.getVariable("fecha_envio_orden");
-
-        if (fechaEnvioStr != null) {
-            try {
-                LocalDateTime fechaEnvio = LocalDateTime.parse(fechaEnvioStr);
-                diasDesdeEnvio = ChronoUnit.DAYS.between(fechaEnvio, fechaRecepcion);
-            } catch (Exception e) {
-                System.err.println("⚠️ No se pudo calcular días desde envío: " + e.getMessage());
+        try {
+            // Capturar usuario desde Camunda
+            String usuario = (String) execution.getVariable("initiator");
+            if (usuario == null || usuario.isEmpty()) {
+                usuario = "SISTEMA";
             }
+            logger.info("Usuario que registra recepción: {}", usuario);
+
+            String ordenId = (String) execution.getVariable("ordenId");
+            // También intentar obtener numero_orden como fallback
+            if (ordenId == null || ordenId.isEmpty()) {
+                ordenId = (String) execution.getVariable("numero_orden");
+            }
+
+            // Validar que exista ordenId
+            if (ordenId == null || ordenId.isEmpty()) {
+                logger.warn("⚠️ Variable 'ordenId' no encontrada, usando timestamp como ID");
+                ordenId = "ORD_" + System.currentTimeMillis();
+            }
+
+            // Obtener datos opcionales
+            Integer cantidadRecibida = (Integer) execution.getVariable("cantidad_recibida");
+
+            logger.info("📦 Registrando recepción para orden: {}", ordenId);
+            if (cantidadRecibida != null) {
+                logger.info("   Cantidad recibida: {} kg", cantidadRecibida);
+            }
+
+            // Actualizar estado en base de datos
+            String estadoAnterior = "ORDEN_ENVIADA";
+            ordenCompraService.actualizarEstado(ordenId, "PEDIDO_RECIBIDO");
+
+            // Registrar en variables del proceso
+            String fechaRegistro = LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+            execution.setVariable("estado_orden", "PEDIDO_RECIBIDO");
+            execution.setVariable("fecha_registro_recepcion", fechaRegistro);
+            execution.setVariable("pedido_registrado", true);
+
+            // Registrar en auditoría
+            auditoriaCompraService.registrarAccion(
+                ordenId,
+                "RECIBIDA",
+                usuario,
+                "Pedido recibido del proveedor",
+                estadoAnterior,
+                "PEDIDO_RECIBIDO"
+            );
+
+            logger.info("✅ Pedido registrado exitosamente por: {}", usuario);
+            System.out.println("✅ Recepción de pedido registrada: " + ordenId + " - " + fechaRegistro);
+
+        } catch (IllegalArgumentException e) {
+            logger.error("❌ Error de validación: {}", e.getMessage());
+            execution.setVariable("pedido_registrado", false);
+            execution.setVariable("error_registro", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            logger.error("❌ Error al registrar recepción de pedido: {}", e.getMessage(), e);
+            execution.setVariable("pedido_registrado", false);
+            execution.setVariable("error_registro", e.getMessage());
+            throw new RuntimeException("Error registrando recepción de pedido", e);
         }
-
-        // Generar reporte de recepción
-        System.out.println("\n📦 ========== REGISTRO DE RECEPCIÓN ==========");
-        System.out.println("╔════════════════════════════════════════════╗");
-        System.out.println("║      PEDIDO RECIBIDO - REGISTRO INICIAL    ║");
-        System.out.println("╚════════════════════════════════════════════╝");
-        System.out.println();
-        System.out.println("Fecha y Hora: " + fechaRecepcion.format(formatter));
-        System.out.println("Número de Orden: " + numeroOrden);
-        System.out.println("Proveedor: " + proveedor);
-        System.out.println("Cantidad Esperada: " + cantidadGas + " kg");
-        System.out.println("Costo Total: $" + costoTotal);
-
-        if (diasDesdeEnvio != null) {
-            System.out.println("Días desde envío: " + diasDesdeEnvio + " días");
-        }
-
-        System.out.println();
-        System.out.println("Estado: ✅ Pedido recibido - Pendiente verificación");
-        System.out.println("Siguiente paso: Verificar cantidad y calidad");
-        System.out.println("==============================================\n");
-
-        // Guardar variables del proceso
-        execution.setVariable("fecha_recepcion", fechaRecepcion.toString());
-        execution.setVariable("hora_recepcion", fechaRecepcion.format(formatter));
-        execution.setVariable("estado_recepcion", "RECIBIDO");
-        execution.setVariable("dias_desde_envio", diasDesdeEnvio);
-        execution.setVariable("timestamp_recepcion", fechaRecepcion.toEpochSecond(
-                java.time.ZoneOffset.UTC));
-
-        // Inicializar variables para el subproceso
-        execution.setVariable("pedido_verificado", false);
-        execution.setVariable("verificacion_completada", false);
     }
 }

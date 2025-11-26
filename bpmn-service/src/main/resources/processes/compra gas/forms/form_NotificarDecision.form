@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "text": "# Notificar Decisión de Aprobación\nIntroduce la decisión de aprobación y justifica tu elección.",
+      "text": "# Notificar Decisión de Aprobación\nIndica si apruebas o rechazas la solicitud.",
       "id": "Text_Encabezado",
       "type": "text",
       "layout": {
@@ -32,19 +32,71 @@
       }
     },
     {
+      "label": "Motivo del rechazo (si aplica)",
+      "values": [
+        {
+          "label": "Presupuesto insuficiente",
+          "value": "presupuesto_insuficiente"
+        },
+        {
+          "label": "Documentación incompleta",
+          "value": "documentacion_incompleta"
+        },
+        {
+          "label": "No justificado",
+          "value": "no_justificado"
+        },
+        {
+          "label": "Fuera de política",
+          "value": "fuera_de_politica"
+        },
+        {
+          "label": "Otros",
+          "value": "otros"
+        }
+      ],
+      "type": "select",
+      "id": "Select_MotivoRechazo",
+      "key": "motivo_rechazo",
+      "description": "Especifique el motivo si la solicitud es rechazada",
+      "validate": {
+        "required": false
+      },
+      "layout": {
+        "row": "Row_1a"
+      }
+    },
+    {
       "label": "Justificación de la decisión",
       "id": "TextArea_Justificacion",
       "type": "textfield",
       "key": "justificacion",
-      "description": "Proporciona una justificación para tu decisión.",
+      "description": "Proporciona una justificación para tu decisión (mínimo 20 caracteres).",
       "validate": {
-        "required": true
+        "required": true,
+        "minLength": 20
       },
       "properties": {
         "multiline": true
       },
       "layout": {
         "row": "Row_2"
+      }
+    },
+    {
+      "label": "Condiciones especiales (si aplica)",
+      "id": "TextArea_Condiciones",
+      "type": "textfield",
+      "key": "condiciones_especiales",
+      "description": "Especifique cualquier condición especial para la aprobación",
+      "validate": {
+        "required": false
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_3"
       }
     }
   ],
@@ -54,7 +106,7 @@
   "executionPlatformVersion": "7.23.0",
   "exporter": {
     "name": "Camunda Modeler",
-    "version": "5.39.0"
+    "version": "5.13.0"
   },
-  "schemaVersion": 19
+  "schemaVersion": 13
 }

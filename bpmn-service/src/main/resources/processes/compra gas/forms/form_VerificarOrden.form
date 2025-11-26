@@ -9,6 +9,47 @@
       }
     },
     {
+      "label": "Número de orden",
+      "type": "textfield",
+      "id": "Text_NumeroOrden",
+      "key": "numero_orden",
+      "description": "Identificador único de la orden",
+      "validate": {
+        "required": true
+      },
+      "layout": {
+        "row": "Row_0a"
+      }
+    },
+    {
+      "label": "Cantidad solicitada (kg)",
+      "type": "number",
+      "id": "Number_CantidadSolicitada",
+      "key": "cantidad_solicitada",
+      "description": "Cantidad que fue solicitada",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_0b"
+      }
+    },
+    {
+      "label": "Cantidad recibida (kg)",
+      "type": "number",
+      "id": "Number_CantidadRecibida",
+      "key": "cantidad_recibida",
+      "description": "Cantidad que se recibió en el pedido",
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "layout": {
+        "row": "Row_0c"
+      }
+    },
+    {
       "label": "¿Existe una discrepancia?",
       "values": [
         {
@@ -32,11 +73,59 @@
       }
     },
     {
+      "label": "Tipo de discrepancia",
+      "values": [
+        {
+          "label": "Cantidad insuficiente",
+          "value": "cantidad_insuficiente"
+        },
+        {
+          "label": "Producto dañado",
+          "value": "producto_danado"
+        },
+        {
+          "label": "Entrega tardía",
+          "value": "entrega_tardia"
+        },
+        {
+          "label": "Otros",
+          "value": "otros"
+        }
+      ],
+      "type": "select",
+      "id": "Select_TipoDiscrepancia",
+      "key": "tipo_discrepancia",
+      "description": "Especifique el tipo de discrepancia encontrada",
+      "validate": {
+        "required": false
+      },
+      "layout": {
+        "row": "Row_1a"
+      }
+    },
+    {
       "label": "Detalles de la discrepancia",
       "id": "TextArea_DetallesDiscrepancia",
       "type": "textfield",
       "key": "detallesDiscrepancia",
-      "description": "Proporciona detalles sobre la discrepancia detectada (si aplica).",
+      "description": "Proporciona detalles sobre la discrepancia detectada (mínimo 20 caracteres si hay discrepancia).",
+      "validate": {
+        "required": false,
+        "minLength": 20
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    },
+    {
+      "label": "Acciones correctivas propuestas",
+      "id": "TextArea_AccionesCorrectivas",
+      "type": "textfield",
+      "key": "acciones_correctivas",
+      "description": "Sugiera acciones para resolver la discrepancia (si aplica)",
       "validate": {
         "required": false
       },
@@ -44,7 +133,7 @@
         "multiline": true
       },
       "layout": {
-        "row": "Row_2"
+        "row": "Row_3"
       }
     }
   ],

@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "text": "# Validar Factura\nVerifica la factura y determina si hay alguna irregularidad detectada.",
+      "text": "# Validar Factura\nVerifica la factura e ingresa los datos para validación.",
       "id": "Text_Header",
       "type": "text",
       "layout": {
@@ -9,21 +9,49 @@
       }
     },
     {
+      "label": "Número de factura",
+      "type": "textfield",
+      "id": "Text_NumeroFactura",
+      "key": "numero_factura",
+      "description": "Ingrese el número de factura del proveedor",
+      "validate": {
+        "required": true,
+        "pattern": "^[A-Z0-9-]+$"
+      },
+      "layout": {
+        "row": "Row_0e"
+      }
+    },
+    {
+      "label": "Monto facturado ($)",
+      "type": "number",
+      "id": "Number_MontoFacturado",
+      "key": "monto_facturado",
+      "description": "Monto total que aparece en la factura",
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "layout": {
+        "row": "Row_0f"
+      }
+    },
+    {
       "label": "¿Irregularidad detectada?",
       "values": [
         {
-          "label": "Sí, se detectó irregularidad",
-          "value": true
-        },
-        {
           "label": "No, factura correcta",
           "value": false
+        },
+        {
+          "label": "Sí, se detectó irregularidad",
+          "value": true
         }
       ],
       "type": "radio",
       "id": "Radio_IrregularityDetected",
       "key": "irregularidadDetectada",
-      "description": "Selecciona 'Sí' si se detectó alguna irregularidad en la factura.",
+      "description": "Selecciona 'Sí' si se detectó alguna irregularidad en la factura. Esto determinará el siguiente paso del proceso.",
       "validate": {
         "required": true
       },
@@ -32,11 +60,63 @@
       }
     },
     {
+      "label": "Tipo de irregularidad (si aplica)",
+      "values": [
+        {
+          "label": "Monto discrepante",
+          "value": "monto_discrepante"
+        },
+        {
+          "label": "Datos del proveedor incorrectos",
+          "value": "datos_proveedor_incorrectos"
+        },
+        {
+          "label": "Cantidad de producto no coincide",
+          "value": "cantidad_no_coincide"
+        },
+        {
+          "label": "Documento incompleto",
+          "value": "documento_incompleto"
+        },
+        {
+          "label": "Otros",
+          "value": "otros"
+        }
+      ],
+      "type": "select",
+      "id": "Select_TipoIrregularidad",
+      "key": "tipo_irregularidad",
+      "description": "Especifique el tipo de irregularidad encontrada",
+      "validate": {
+        "required": false
+      },
+      "layout": {
+        "row": "Row_1a"
+      }
+    },
+    {
       "label": "Detalles de la irregularidad",
       "id": "TextArea_Details",
       "type": "textfield",
       "key": "detallesIrregularidad",
-      "description": "Proporciona detalles sobre la irregularidad detectada (si aplica).",
+      "description": "Proporciona detalles sobre la irregularidad detectada (mínimo 20 caracteres si hay irregularidad).",
+      "validate": {
+        "required": false,
+        "minLength": 20
+      },
+      "properties": {
+        "multiline": true
+      },
+      "layout": {
+        "row": "Row_2"
+      }
+    },
+    {
+      "label": "Observaciones finales",
+      "id": "TextArea_Observaciones",
+      "type": "textfield",
+      "key": "observaciones_factura",
+      "description": "Cualquier información adicional relevante",
       "validate": {
         "required": false
       },
@@ -44,7 +124,7 @@
         "multiline": true
       },
       "layout": {
-        "row": "Row_2"
+        "row": "Row_4"
       }
     }
   ],
@@ -54,7 +134,7 @@
   "executionPlatformVersion": "7.23.0",
   "exporter": {
     "name": "Camunda Modeler",
-    "version": "5.39.0"
+    "version": "5.13.0"
   },
-  "schemaVersion": 19
+  "schemaVersion": 13
 }

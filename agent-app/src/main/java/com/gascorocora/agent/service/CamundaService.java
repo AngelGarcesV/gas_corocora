@@ -79,29 +79,23 @@ public class CamundaService {
 
     public void completeTask(String taskId, Map<String, Object> variables, Map<String, String> fieldTypes) {
         Map<String, Object> convertedVars = convertToVariableMap(variables, fieldTypes);
-        log.info("=== Camunda API Call ===");
-        log.info("Converted variables: {}", convertedVars);
+        log.info("=== Camunda Complete Task Call ===");
+        log.info("Task ID: {}", taskId);
+        log.info("Variables count: {}", convertedVars.size());
+        convertedVars.forEach((key, value) -> log.info("  {}: {}", key, value));
         
         Map<String, Object> body = Map.of("variables", convertedVars);
-        log.info("Request body: {}", body);
         
         try {
             camundaWebClient.post()
                     .uri("/task/" + taskId + "/complete")
                     .bodyValue(body)
                     .retrieve()
-                    .onStatus(status -> status.is4xxClientError(), response -> {
-                        return response.bodyToMono(String.class).flatMap(errorBody -> {
-                            log.error("Camunda API Error Response: {}", errorBody);
-                            return reactor.core.publisher.Mono.error(
-                                new RuntimeException("Camunda API Error: " + errorBody)
-                            );
-                        });
-                    })
                     .bodyToMono(Void.class)
                     .block();
+            log.info("Task {} completed successfully", taskId);
         } catch (Exception e) {
-            log.error("Error completing task", e);
+            log.error("Error completing task {}: {}", taskId, e.getMessage(), e);
             throw e;
         }
     }
@@ -170,10 +164,18 @@ public class CamundaService {
                             String type = "String";
                             
                             // Determine the type based on the field type from Camunda form
-                            if ("checkbox".equals(fieldType)) {
-                                type = "Boolean";
-                                if (!(value instanceof Boolean)) {
-                                    value = Boolean.parseBoolean(value.toString());
+                            if ("checkbox".equals(fieldType) || "radio".equals(fieldType)) {
+                                // For radio buttons that have boolean values (true/false)
+                                String strValue = value.toString().toLowerCase().trim();
+                                if ("true".equals(strValue) || "si".equals(strValue) || "yes".equals(strValue) || "1".equals(strValue)) {
+                                    type = "Boolean";
+                                    value = true;
+                                } else if ("false".equals(strValue) || "no".equals(strValue) || "0".equals(strValue)) {
+                                    type = "Boolean";
+                                    value = false;
+                                } else {
+                                    // Keep as string if not a boolean-like value
+                                    type = "String";
                                 }
                             } else if ("number".equals(fieldType)) {
                                 // Number field - check if decimal or integer
@@ -222,5 +224,30 @@ public class CamundaService {
                             );
                         }
                 ));
+    }
+
+    /**
+     * Obtiene tareas activas del proceso Compra_gas (para la sección de compras)
+     * Filtra solo tareas ACTIVAS (no completadas)
+     */
+    public List<Map<String, Object>> getCompraGasTasks() {
+        try {
+            // Obtener tareas ACTIVAS del proceso Compra_gas
+            return camundaWebClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/task")
+                            .queryParam("processDefinitionKey", "Compra_gas")
+                            .queryParam("active", "true")
+                            .queryParam("sortBy", "created")
+                            .queryParam("sortOrder", "desc")
+                            .build())
+                    .retrieve()
+                    .bodyToFlux(new ParameterizedTypeReference<Map<String, Object>>() {})
+                    .collectList()
+                    .block();
+        } catch (Exception e) {
+            log.error("Error obtener tareas de Compra_gas", e);
+            return List.of();
+        }
     }
 }

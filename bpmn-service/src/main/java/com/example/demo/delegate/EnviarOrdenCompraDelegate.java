@@ -1,105 +1,194 @@
 package com.example.demo.delegate;
 
+import com.example.demo.model.OrdenCompra;
+import com.example.demo.repository.OrdenCompraRepository;
+import com.example.demo.service.EmailService;
+import com.example.demo.service.AuditoriaCompraService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Service Task: Enviar orden de compra al proveedor
- * Reemplaza la tarea manual "Enviar orden de compra"
+ * Se ejecuta para notificar al proveedor sobre la orden de compra
  *
- * Variables de entrada esperadas:
- * - proveedor_seleccionado (String)
- * - cantidad_gas (Integer)
- * - costo_total (Double)
- * - numero_orden (String)
- * - tiempo_entrega_dias (Integer)
+ * Variables de entrada:
+ * - ordenId (String): ID de la orden
+ * - initiator (String): usuario de Camunda
+ *
+ * Variables de salida:
+ * - estado_orden (String): "ORDEN_ENVIADA"
+ * - fecha_envio_orden (String)
+ * - orden_enviada (Boolean)
  */
 @Component("enviarOrdenCompraDelegate")
 public class EnviarOrdenCompraDelegate implements JavaDelegate {
 
+    private static final Logger logger = LoggerFactory.getLogger(EnviarOrdenCompraDelegate.class);
+
+    @Autowired
+    private OrdenCompraRepository ordenCompraRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private AuditoriaCompraService auditoriaCompraService;
+
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        // Obtener información de la orden
-        String numeroOrden = (String) execution.getVariable("numero_orden");
-        String proveedor = (String) execution.getVariable("proveedor_seleccionado");
-        Integer cantidadGas = (Integer) execution.getVariable("cantidad_gas");
-        Number costoTotal = (Number) execution.getVariable("costo_total");
-        Integer tiempoEntrega = (Integer) execution.getVariable("tiempo_entrega_dias");
+        logger.info("=== Iniciando envío de orden de compra ===");
 
-        // Generar contenido de la orden
-        String ordenCompra = generarOrdenCompra(numeroOrden, proveedor, cantidadGas,
-                costoTotal, tiempoEntrega);
+        try {
+            // Capturar usuario desde Camunda
+            String usuario = (String) execution.getVariable("initiator");
+            if (usuario == null || usuario.isEmpty()) {
+                usuario = "SISTEMA";
+            }
+            logger.info("Usuario que envía orden: {}", usuario);
 
-        // Simular envío al proveedor (aquí podrías integrar con email, API, etc.)
-        boolean envioExitoso = enviarAlProveedor(proveedor, ordenCompra);
+            String ordenId = (String) execution.getVariable("ordenId");
 
-        if (envioExitoso) {
-            System.out.println("✅ Orden enviada exitosamente al proveedor: " + proveedor);
+            // Validar que exista ordenId
+            if (ordenId == null || ordenId.isEmpty()) {
+                logger.error("❌ Variable 'ordenId' no encontrada o vacía");
+                execution.setVariable("orden_enviada", false);
+                execution.setVariable("error_envio", "OrderId no disponible");
+                throw new IllegalArgumentException("Variable 'ordenId' es requerida");
+            }
 
-            // Guardar información del envío
+            logger.info("📮 Enviando orden de compra: {}", ordenId);
+
+            // Cargar la orden
+            OrdenCompra orden = ordenCompraRepository.findByOrdenId(ordenId);
+            if (orden == null) {
+                logger.error("❌ Orden no encontrada en BD: {}", ordenId);
+                execution.setVariable("orden_enviada", false);
+                execution.setVariable("error_envio", "Orden no encontrada");
+                throw new IllegalArgumentException("Orden no encontrada: " + ordenId);
+            }
+
+            // Guardar estado anterior
+            String estadoAnterior = orden.getEstado();
+
+            // Actualizar estado y fecha
+            orden.setEstado("ORDEN_ENVIADA");
+            orden.setUsuarioModifica(usuario);
+            orden.setFechaActualizacion(Date.from(LocalDateTime.now()
+                    .atZone(ZoneId.systemDefault()).toInstant()));
+            ordenCompraRepository.save(orden);
+
+            logger.info("✅ Orden actualizada en BD");
+
+            // Preparar información de la orden
+            String proveedor = orden.getProveedor() != null ? orden.getProveedor() : "Proveedor";
+            Integer cantidad = orden.getCantidadGas();
+            Double costo = orden.getCostoTotal();
+            String fechaEnvio = LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+
+            // Preparar cuerpo del correo
+            String cuerpo = construirCuerpoCorreo(ordenId, proveedor, cantidad, costo, fechaEnvio);
+
+            logger.info("📧 Enviando correo de orden a: {}", proveedor);
+
+            // Enviar correo
+            try {
+                emailService.sendSimpleEmail(
+                        "gascorocora@gmail.com",
+                        "Compra Gas - Orden enviada: " + ordenId,
+                        cuerpo
+                );
+                logger.info("✅ Correo enviado exitosamente");
+            } catch (Exception e) {
+                logger.error("⚠️ Error al enviar correo: {}", e.getMessage());
+                // No lanzar excepción aquí, solo registrar el error
+            }
+
+            // Registrar variables de salida
+            execution.setVariable("estado_orden", "ORDEN_ENVIADA");
+            execution.setVariable("fecha_envio_orden", fechaEnvio);
             execution.setVariable("orden_enviada", true);
-            execution.setVariable("fecha_envio_orden", LocalDateTime.now().toString());
-            execution.setVariable("estado_orden", "ENVIADA");
-            execution.setVariable("contenido_orden", ordenCompra);
-        } else {
-            System.err.println("❌ Error al enviar orden al proveedor");
+            execution.setVariable("usuario_envio", usuario);
+
+            // Registrar en auditoría
+            auditoriaCompraService.registrarAccion(
+                ordenId,
+                "ENVIADA",
+                usuario,
+                "Orden de compra enviada al proveedor: " + proveedor,
+                estadoAnterior,
+                "ORDEN_ENVIADA"
+            );
+
+            logger.info("✅ Orden enviada exitosamente");
+            System.out.println("✅ ORDEN DE COMPRA ENVIADA: " + ordenId);
+            execution.setVariable("estado_orden", "ORDEN_ENVIADA");
+            execution.setVariable("fecha_envio_orden", fechaEnvio);
+            execution.setVariable("orden_enviada", true);
+
+            System.out.println("✅ ORDEN DE COMPRA ENVIADA");
+            System.out.println("   ID: " + ordenId);
+            System.out.println("   Proveedor: " + proveedor);
+            System.out.println("   Cantidad: " + cantidad + " kg");
+            System.out.println("   Costo: $" + costo);
+            System.out.println("   Fecha: " + fechaEnvio);
+
+        } catch (IllegalArgumentException e) {
+            logger.error("❌ Error de validación: {}", e.getMessage());
             execution.setVariable("orden_enviada", false);
-            execution.setVariable("error_envio", "No se pudo contactar al proveedor");
+            throw e;
+        } catch (Exception e) {
+            logger.error("❌ Error inesperado al enviar orden: {}", e.getMessage(), e);
+            execution.setVariable("orden_enviada", false);
+            execution.setVariable("error_envio", e.getMessage());
+            throw new RuntimeException("Error enviando orden de compra", e);
         }
     }
 
-    private String generarOrdenCompra(String numeroOrden, String proveedor,
-                                      Integer cantidad, Number costo, Integer tiempoEntrega) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String fechaActual = LocalDateTime.now().format(formatter);
+    private String construirCuerpoCorreo(String ordenId, String proveedor, 
+                                         Integer cantidad, Double costo, String fecha) {
+        StringBuilder cuerpo = new StringBuilder();
+        cuerpo.append("╔═══════════════════════════════════════════════════╗\n");
+        cuerpo.append("║         ✅ ORDEN DE COMPRA ENVIADA                ║\n");
+        cuerpo.append("╚═══════════════════════════════════════════════════╝\n\n");
 
-        StringBuilder orden = new StringBuilder();
-        orden.append("═══════════════════════════════════════════════════\n");
-        orden.append("           ORDEN DE COMPRA DE GAS NATURAL          \n");
-        orden.append("═══════════════════════════════════════════════════\n\n");
-        orden.append("Número de Orden: ").append(numeroOrden).append("\n");
-        orden.append("Fecha de Emisión: ").append(fechaActual).append("\n");
-        orden.append("Proveedor: ").append(proveedor).append("\n\n");
-        orden.append("---------------------------------------------------\n");
-        orden.append("DETALLES DEL PEDIDO:\n");
-        orden.append("---------------------------------------------------\n");
-        orden.append("Producto: Gas Natural\n");
-        orden.append("Cantidad: ").append(cantidad).append(" kg\n");
-        orden.append("Costo Total: $").append(costo).append("\n");
-        orden.append("Tiempo de Entrega Esperado: ").append(tiempoEntrega).append(" días\n\n");
-        orden.append("---------------------------------------------------\n");
-        orden.append("INSTRUCCIONES DE ENTREGA:\n");
-        orden.append("---------------------------------------------------\n");
-        orden.append("- Coordinar entrega con anticipación\n");
-        orden.append("- Presentar documentación de calidad\n");
-        orden.append("- Incluir certificados de seguridad\n");
-        orden.append("- Factura debe coincidir con esta orden\n\n");
-        orden.append("═══════════════════════════════════════════════════\n");
-        orden.append("    Sistema Automático de Gestión de Compras       \n");
-        orden.append("═══════════════════════════════════════════════════\n");
+        cuerpo.append("Estimado ").append(proveedor).append(",\n\n");
+        cuerpo.append("Le informamos que su orden de compra ha sido procesada.\n\n");
 
-        return orden.toString();
-    }
+        cuerpo.append("───────────────────────────────────────────────────\n");
+        cuerpo.append("DETALLES DE LA ORDEN:\n");
+        cuerpo.append("───────────────────────────────────────────────────\n");
+        cuerpo.append("ID Orden: ").append(ordenId).append("\n");
+        cuerpo.append("Fecha: ").append(fecha).append("\n");
+        if (cantidad != null) {
+            cuerpo.append("Cantidad: ").append(cantidad).append(" kg\n");
+        }
+        if (costo != null) {
+            cuerpo.append("Monto: $").append(costo).append("\n");
+        }
 
-    private boolean enviarAlProveedor(String proveedor, String ordenCompra) {
-        // Aquí irían las integraciones reales:
-        // - Envío por email
-        // - API REST del proveedor
-        // - Sistema EDI
-        // - Generación de PDF
+        cuerpo.append("\n───────────────────────────────────────────────────\n");
+        cuerpo.append("PRÓXIMOS PASOS:\n");
+        cuerpo.append("───────────────────────────────────────────────────\n");
+        cuerpo.append("1. Confirmar recepción de esta orden\n");
+        cuerpo.append("2. Coordinar entrega\n");
+        cuerpo.append("3. Enviar factura al departamento de compras\n\n");
 
-        // Por ahora, simulamos el envío imprimiendo en consola
-        System.out.println("\n📤 ========== ENVIANDO ORDEN A PROVEEDOR ==========");
-        System.out.println("Destinatario: " + proveedor);
-        System.out.println("Método: Email/API (simulado)");
-        System.out.println("\nContenido de la orden:\n");
-        System.out.println(ordenCompra);
-        System.out.println("====================================================\n");
+        cuerpo.append("Para consultas, contacte a: gascorocora@gmail.com\n\n");
 
-        // Simular éxito (en producción, verificar respuesta real)
-        return true;
+        cuerpo.append("═══════════════════════════════════════════════════\n");
+        cuerpo.append("       Sistema Automático de Gestión de Compras    \n");
+        cuerpo.append("═══════════════════════════════════════════════════\n");
+
+        return cuerpo.toString();
     }
 }

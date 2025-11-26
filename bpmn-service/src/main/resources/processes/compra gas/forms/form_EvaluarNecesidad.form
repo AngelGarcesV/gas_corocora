@@ -9,28 +9,71 @@
       }
     },
     {
-      "label": "Cantidad estimada de gas en deposito(kg)",
+      "label": "Cantidad actual en depósito (kg)",
+      "id": "Number_CantidadActual",
+      "type": "number",
+      "key": "cantidad_actual_deposito",
+      "description": "Cantidad actual de gas disponible en el depósito.",
+      "validate": {
+        "required": true,
+        "min": 0
+      },
+      "layout": {
+        "row": "Row_000"
+      }
+    },
+    {
+      "label": "Cantidad mínima requerida (kg)",
+      "id": "Number_CantidadMinima",
+      "type": "number",
+      "key": "cantidad_minima_requerida",
+      "description": "Cantidad mínima necesaria para operaciones.",
+      "validate": {
+        "required": true,
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_001"
+      }
+    },
+    {
+      "label": "Cantidad estimada a comprar (kg)",
       "id": "Number_CantidadEstimada",
       "type": "number",
       "key": "cantidad_estimada",
       "description": "Total aproximado que se necesita.",
       "validate": {
         "required": true,
-        "min": 1
+        "min": 1,
+        "max": 10000
       },
       "layout": {
         "row": "Row_12rxw6d"
       }
     },
     {
-      "label": "Fecha de revisión (AAAA-MM-DD)",
-      "id": "Text_FechaRequerido",
-      "type": "textfield",
-      "key": "fecha_requerido",
-      "description": "Ejemplo: 2025-12-31",
+      "label": "Consumo promedio mensual (kg)",
+      "id": "Number_ConsumoMensual",
+      "type": "number",
+      "key": "consumo_promedio_mensual",
+      "description": "Basado en meses anteriores",
       "validate": {
         "required": true,
-        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        "min": 1
+      },
+      "layout": {
+        "row": "Row_002"
+      }
+    },
+    {
+      "label": "Fecha de revisión",
+      "id": "DateTime_FechaRequerido",
+      "type": "datetime",
+      "key": "fecha_requerido",
+      "description": "Seleccione la fecha de revisión",
+      "format": "yyyy-MM-dd HH:mm",
+      "validate": {
+        "required": true
       },
       "layout": {
         "row": "Row_0fcjwyt"
@@ -41,9 +84,10 @@
       "id": "TextArea_Justificacion",
       "type": "textfield",
       "key": "justificacion_necesidad",
-      "description": "Explique por qué se necesita la compra.",
+      "description": "Explique por qué se necesita la compra (mínimo 20 caracteres).",
       "validate": {
-        "required": true
+        "required": true,
+        "minLength": 20
       },
       "properties": {
         "multiline": true
