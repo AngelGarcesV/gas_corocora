@@ -28,11 +28,11 @@
         <bpmn:flowNodeRef>Event_1bf9n2z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1lfx28d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1s9wwrt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_LimpiarVariablesVerificacion</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0tp7mb7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_06zg5v5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_11hbts6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_ConfirmarInstalacion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LimpiarVariablesVerificacion</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1bavo0y" name="Área Comercial">
         <bpmn:flowNodeRef>Activity_1t7kyo3</bpmn:flowNodeRef>
@@ -40,9 +40,9 @@
         <bpmn:flowNodeRef>Activity_0yj174j</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0h6leqx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0zzargi</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_RegistrarPagoDB</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0dkq5n9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_055uyhj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_RegistrarPagoDB</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Event_0jslj8w" name="Solicitud de conexión recibida">
@@ -105,7 +105,7 @@
     <bpmn:endEvent id="Event_1bf9n2z" name="Solicitud rechazada por inviabilidad">
       <bpmn:incoming>Flow_1s900fz</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_0yj174j" name="Cancelar solicitud" camunda:delegateExpression="#{cancelarSolicitudDelegate}">
+    <bpmn:serviceTask id="Activity_0yj174j" name="Cancelar solicitud" camunda:class="com.example.demo.delegate.cancelarSolicitudDelegate">
       <bpmn:incoming>Flow_1j0dbx9</bpmn:incoming>
       <bpmn:outgoing>Flow_0rf11jx</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -116,54 +116,6 @@
       <bpmn:incoming>Flow_03r38nm</bpmn:incoming>
       <bpmn:outgoing>Flow_1xfk6vi</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_RegistrarPagoDB" name="Registrar pago">
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://localhost:8083/api/facturacion/pago</camunda:inputParameter>
-            <camunda:inputParameter name="method">POST</camunda:inputParameter>
-            <camunda:inputParameter name="headers">
-              <camunda:map>
-                <camunda:entry key="Content-Type">application/json</camunda:entry>
-              </camunda:map>
-            </camunda:inputParameter>
-            <camunda:inputParameter name="payload">
-              <camunda:script scriptFormat="JavaScript">
-var facturacion = {
-  "businessKey": execution.getBusinessKey(),
-  "cedulaCliente": execution.getVariable("cedulaCliente"),
-  "montoRecibido": execution.getVariable("monto_recibido"),
-  "metodoPago": execution.getVariable("metodo_pago"),
-  "numeroTransaccion": execution.getVariable("numero_transaccion"),
-  "fechaPago": execution.getVariable("fecha_pago"),
-  "comprobanteUrl": execution.getVariable("comprobante_url"),
-  "observacionesPago": execution.getVariable("observaciones_pago")
-};
-JSON.stringify(facturacion);
-              </camunda:script>
-            </camunda:inputParameter>
-            <camunda:outputParameter name="facturacionId">
-              <camunda:script scriptFormat="JavaScript">
-var response = connector.getVariable("response");
-if (response) {
-  var json = S(response);
-  if (json.hasProp("id")) {
-    json.prop("id").numberValue();
-  } else {
-    null;
-  }
-} else {
-  null;
-}
-              </camunda:script>
-            </camunda:outputParameter>
-          </camunda:inputOutput>
-          <camunda:connectorId>http-connector</camunda:connectorId>
-        </camunda:connector>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1xfk6vi</bpmn:incoming>
-      <bpmn:outgoing>Flow_1y9d7mi</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0dkq5n9" name="Solicitud rechazada">
       <bpmn:incoming>Flow_1p63p4i</bpmn:incoming>
     </bpmn:endEvent>
@@ -306,10 +258,6 @@ if (response) {
       <bpmn:incoming>Flow_ConfirmarToGateway</bpmn:incoming>
       <bpmn:outgoing>Flow_104edbe_old</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Task_LimpiarVariablesVerificacion" name="Limpiar variables de verificación" camunda:delegateExpression="#{limpiarVariablesVerificacionDelegate}">
-      <bpmn:incoming>Flow_104edbe_old</bpmn:incoming>
-      <bpmn:outgoing>Flow_104edbe</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:userTask id="Activity_0tp7mb7" name="Verificar instalación" camunda:formRef="verificacion-instalacion" camunda:formRefBinding="latest">
       <bpmn:incoming>Flow_104edbe</bpmn:incoming>
       <bpmn:outgoing>Flow_1l7q6d1</bpmn:outgoing>
@@ -421,18 +369,15 @@ execution.removeVariable("fecha_limite_correccion");</bpmn:script>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">
-              <camunda:script scriptFormat="JavaScript">var cliente = {
-  "cedula": execution.getVariable("cedulaCliente"),
-  "nombre": execution.getVariable("nombre"),
-  "direccion": execution.getVariable("direccion"),
-  "ciudad": execution.getVariable("ciudad"),
-  "estrato": execution.getVariable("estrato"),
-  "telefono": execution.getVariable("telefono"),
-  "email": execution.getVariable("cliente_email")
-};
-JSON.stringify(cliente);</camunda:script>
-            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "cedula":"${cedulaCliente}",
+  "nombre":"${nombre}",
+  "direccion":"${direccion}",
+  "ciudad":"${ciudad}",
+  "estrato":"${estrato}",
+  "telefono":"${telefono}",
+  "email":"${cliente_email}"
+}</camunda:inputParameter>
             <camunda:outputParameter name="clienteId">
               <camunda:script scriptFormat="JavaScript">var response = connector.getVariable("response");
 if (response) {
@@ -469,6 +414,58 @@ if (response) {
       <bpmn:outgoing>Flow_ConfirmarToGateway</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_ConfirmarToGateway" sourceRef="Activity_ConfirmarInstalacion" targetRef="Gateway_1s9wwrt" />
+    <bpmn:serviceTask id="Task_LimpiarVariablesVerificacion" name="Limpiar variables de verificación" camunda:delegateExpression="#{limpiarVariablesVerificacionDelegate}">
+      <bpmn:incoming>Flow_104edbe_old</bpmn:incoming>
+      <bpmn:outgoing>Flow_104edbe</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_RegistrarPagoDB" name="Registrar pago">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://localhost:8083/api/facturacion/pago</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">
+var facturacion = {
+  "businessKey": execution.getBusinessKey(),
+  "cedulaCliente": execution.getVariable("cedulaCliente"),
+  "montoRecibido": execution.getVariable("monto_recibido"),
+  "metodoPago": execution.getVariable("metodo_pago"),
+  "numeroTransaccion": execution.getVariable("numero_transaccion"),
+  "fechaPago": execution.getVariable("fecha_pago"),
+  "comprobanteUrl": execution.getVariable("comprobante_url"),
+  "observacionesPago": execution.getVariable("observaciones_pago")
+};
+JSON.stringify(facturacion);
+              </camunda:script>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="facturacionId">
+              <camunda:script scriptFormat="JavaScript">
+var response = connector.getVariable("response");
+if (response) {
+  var json = S(response);
+  if (json.hasProp("id")) {
+    json.prop("id").numberValue();
+  } else {
+    null;
+  }
+} else {
+  null;
+}
+              </camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xfk6vi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y9d7mi</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0v8kt2o">
@@ -503,6 +500,14 @@ if (response) {
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1023550_di" bpmnElement="Activity_0l33lbs">
         <dc:Bounds x="930" y="670" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_LimpiarVariablesVerificacion_di" bpmnElement="Task_LimpiarVariablesVerificacion">
+        <dc:Bounds x="2180" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_RegistrarPagoDB_di" bpmnElement="Activity_RegistrarPagoDB">
+        <dc:Bounds x="1640" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1tojk30_di" bpmnElement="Activity_1t7kyo3">
         <dc:Bounds x="880" y="270" width="100" height="80" />
@@ -548,10 +553,6 @@ if (response) {
         <dc:Bounds x="1410" y="350" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_RegistrarPagoDB_di" bpmnElement="Activity_RegistrarPagoDB">
-        <dc:Bounds x="1710" y="350" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_04qbwdk_di" bpmnElement="Event_0dkq5n9">
         <dc:Bounds x="1532" y="232" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -579,10 +580,6 @@ if (response) {
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1s9wwrt_di" bpmnElement="Gateway_1s9wwrt" isMarkerVisible="true">
         <dc:Bounds x="2085" y="695" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_LimpiarVariablesVerificacion_di" bpmnElement="Task_LimpiarVariablesVerificacion">
-        <dc:Bounds x="2160" y="680" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tp7mb7_di" bpmnElement="Activity_0tp7mb7">
         <dc:Bounds x="2330" y="680" width="100" height="80" />
@@ -693,7 +690,7 @@ if (response) {
         <di:waypoint x="2760" y="990" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y9d7mi_di" bpmnElement="Flow_1y9d7mi">
-        <di:waypoint x="1810" y="390" />
+        <di:waypoint x="1740" y="390" />
         <di:waypoint x="1850" y="390" />
         <di:waypoint x="1850" y="720" />
         <di:waypoint x="1910" y="720" />
@@ -750,15 +747,15 @@ if (response) {
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_104edbe_old_di" bpmnElement="Flow_104edbe_old">
         <di:waypoint x="2135" y="720" />
-        <di:waypoint x="2160" y="720" />
+        <di:waypoint x="2180" y="720" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_104edbe_di" bpmnElement="Flow_104edbe">
-        <di:waypoint x="2260" y="720" />
+        <di:waypoint x="2280" y="720" />
         <di:waypoint x="2330" y="720" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xfk6vi_di" bpmnElement="Flow_1xfk6vi">
         <di:waypoint x="1510" y="390" />
-        <di:waypoint x="1710" y="390" />
+        <di:waypoint x="1640" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_07wh6h9_di" bpmnElement="Flow_07wh6h9">
         <di:waypoint x="2930" y="870" />
